@@ -1,0 +1,2 @@
+Nombre: . Estado: true. Dificultad: INFANTIL. Numero maximo de karts: 120
+Nombre: manolita. Estado: false. Dificultad: FAMILIAR. Numero maximo de karts: 10
