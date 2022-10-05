@@ -8,11 +8,12 @@ public class main
 {
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
-		kart k = kart.getKart(0, false, null);
-		pista p = pista.getPista(null, false, null, 0);
+		kart k = kart.getKart(0, null, null);
+		pista p = pista.getPista(null, null, null, 0);
 		Scanner entrada = new Scanner(System.in);
 		Scanner variables = new Scanner(System.in);
 		ArrayList<String> PistaKart = new ArrayList<String>();
+		ArrayList<String> kartAsociados = new ArrayList<String>();
 		
 		int opcion = 1;
 		
@@ -23,7 +24,7 @@ public class main
 			
 			System.out.println("SECCION USUARIO");
 			System.out.println("-----------------------");
-			// Dar de alta a un usuario comprobando que no está registrado previamente
+			// Dar de alta a un usuario comprobando que no estï¿½ registrado previamente
 			System.out.println("1. Dar de alta a un usuario (NO IMPLEMENTADA)");
 			
 			// Dar de baja a un usuario
@@ -44,11 +45,11 @@ public class main
 			System.out.println("6. Listar pistas en mantenimiento");
 			
 			/*
-			 * Dado un número de karts y tipo de pista, devolver el conjunto de pistas que estén
-				libres (no reservadas ni en mantenimiento) y tengan al menos ese número de karts
+			 * Dado un nï¿½mero de karts y tipo de pista, devolver el conjunto de pistas que estï¿½n
+				libres (no reservadas ni en mantenimiento) y tengan al menos ese nï¿½mero de karts
 				asociados.
 			 */
-			System.out.println("7. Listar pistas libres (NO IMPLEMENTADA)");
+			System.out.println("7. Listar pistas libres");
 			
 			
 			System.out.println("\nSECCION KART");
@@ -56,9 +57,9 @@ public class main
 			// Crear kart
 			System.out.println("8. Crear karts");
 			
-			/*Asociar karts a pistas disponibles, controlando que los karts no estén asignados a
-				otras pistas o en mantenimiento. También deben cumplirse las restricciones entre
-				tipos de pistas (es decir, su dificultad) y de karts, así como el número máximo de
+			/*Asociar karts a pistas disponibles, controlando que los karts no estï¿½n asignados a
+				otras pistas o en mantenimiento. Tambiï¿½n deben cumplirse las restricciones entre
+				tipos de pistas (es decir, su dificultad) y de karts, asï¿½ como el nï¿½mero mï¿½ximo de
 				karts.
 			 */
 			System.out.println("9. Asociar karts (NO IMPLEMENTADA)");
@@ -100,17 +101,11 @@ public class main
 			case 6:
 				PistaKart.clear();
 				PistaKart = p.pistasMantenimiento();
-				
-				for(String A: PistaKart)
-				{
-					System.out.println(A + "\n");
-					System.out.print("\n");
-				}
-				System.out.println("\n");
 				break;
 				
 			case 7:
-			
+				PistaKart.clear();
+				PistaKart = p.pistasDisponibles();
 				break;
 				
 			case 8:
@@ -119,20 +114,13 @@ public class main
 				break;
 				
 			case 9:
+				//p.asociarKartAPista();
 				break;
 				
 			case 10:
 				PistaKart.clear();
 				PistaKart = p.consultarKartsDisponibles();
-				
-				for(String A: PistaKart)
-				{
-					System.out.println(A + "\n");
-					System.out.print("\n");
-				}
-				System.out.println("\n");
 				break;
-				
 			}
 		}
 	}

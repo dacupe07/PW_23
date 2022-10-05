@@ -9,7 +9,7 @@ public class kart
 {
 	
 	private int idKart;
-	private boolean tipoKart;
+	private String tipoKart;
 	private disponibilidad Disponibilidad;
 	
 	
@@ -20,7 +20,7 @@ public class kart
 		
 	}
 	
-	public static kart getKart(int idKart, boolean tipoKart, disponibilidad Disponibilidad)
+	public static kart getKart(int idKart, String tipoKart, disponibilidad Disponibilidad)
 	{
 		if(Kart == null)
 		{
@@ -29,7 +29,7 @@ public class kart
 		return Kart;
 	}
 	
-	private kart(int idKart, boolean tipoKart, disponibilidad Disponibilidad)
+	private kart(int idKart, String tipoKart, disponibilidad Disponibilidad)
 	{
 		this.idKart = idKart;
 		this.tipoKart = tipoKart;
@@ -63,7 +63,7 @@ public class kart
 	 * 
 	 * @return tipo
 	 */	
-	public boolean getKartTipo()
+	public String getKartTipo()
 	{
 		return tipoKart;
 	}
@@ -73,7 +73,7 @@ public class kart
 	 * 
 	 * @param tipoKart
 	 */
-	public void setKartTipo(boolean tipoKart)
+	public void setKartTipo(String tipoKart)
 	{
 		this.tipoKart = tipoKart;
 	}
@@ -115,8 +115,8 @@ public class kart
 		idKart = lector.nextInt();
 		setKartID(idKart);
 		
-		System.out.print("Introduce el tipo de kart (1. Niños / 2. Adultos): ");
-		tipoKart = lector.nextBoolean();
+		System.out.print("Introduce el tipo de kart (NiÃ±os / Adultos): ");
+		tipoKart = lector.nextLine();
 		setKartTipo(tipoKart);
 		
 		System.out.print("Estado del Kart (1. Disponible / 2. Reservado / 3. Mantenimiento): ");
