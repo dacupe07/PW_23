@@ -6,7 +6,8 @@ public class ReservaAdultos extends Reserva{
 	public ReservaAdultos() {
 		
 	}
-
+	
+	
 	/**
 	 * @return the nAdultos
 	 */
@@ -19,6 +20,16 @@ public class ReservaAdultos extends Reserva{
 	 */
 	public void setnAdultos(int nAdultos) {
 		this.nAdultos = nAdultos;
+	}
+
+	public String toString() {
+		
+		String info = super.toString();
+		
+		if(this.nAdultos!= 0) {
+			info += " Adultos: " + this.nAdultos;
+		}
+		return info;
 	}
 	
 	
