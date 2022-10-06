@@ -5,7 +5,7 @@ public class BonoReservaCreator extends ReservaCreator{
 	@Override
 	public ReservaAdultos createReservaAdultos() {
 		ReservaAdultos reserva = new ReservaAdultos();
-		
+		System.out.println("Hola he entrado en la función crear Reserva adultos en Bono. \n");
 		return reserva;
 	}
 	

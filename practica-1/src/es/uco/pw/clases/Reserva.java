@@ -1,5 +1,6 @@
 package es.uco.pw.clases;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Reserva {
 	private int idUsuario;
@@ -104,6 +105,75 @@ public class Reserva {
 		String info = "\n--- INFORMACION INTRODUCIDA --- \n ID Usuario=" + idUsuario + ", Fecha=" + fecha + ", Hora=" + hora + ", Duracion=" + duracion
 				+ ", Pista=" + pista + ", Precio=" + precio + ", Descuento por Antigüedad=" + descuentoAntigüedad + "\n\n";
 		return info;
+	}
+	
+	public  void crearReservaBono() {
+		int tipo;
+		BonoReservaCreator reservaBono = new BonoReservaCreator();
+		Scanner lector = new Scanner(System.in);
+		
+		
+		System.out.println("¿Qué tipo de reserva desea realizar? 0.ADULTOS//1.FAMILIAR//2.INFANTIL \n");
+		System.out.println(" Introduce el numero perteneciente a la opción deseada: ");
+		tipo = lector.nextInt();
+		
+		switch(tipo) {
+		
+		case 0:
+			reservaBono.createReservaAdultos();
+			break;
+		case 1:
+			reservaBono.createReservaFamiliar();
+			break;
+		case 2:
+			reservaBono.createReservaInfantil();
+			break;
+		}
+		
+		
+	}
+	
+	public  void crearReservaIndividual() {
+		int tipo;
+		IndividualReservaCreator reservaIndividual = new IndividualReservaCreator();
+		Scanner lector = new Scanner(System.in);
+		
+		
+		System.out.println("¿Qué tipo de reserva desea realizar? 0.ADULTOS//1.FAMILIAR//2.INFANTIL \n");
+		System.out.println(" Introduce el numero perteneciente a la opción deseada: ");
+		tipo = lector.nextInt();
+		
+		switch(tipo) {
+		
+		case 0:
+			reservaIndividual.createReservaAdultos();
+			break;
+		case 1:
+			reservaIndividual.createReservaFamiliar();
+			break;
+		case 2:
+			reservaIndividual.createReservaInfantil();
+			break;
+		}
+		
+		
+	}
+	
+	public float calcularPrecio(int duracion) {
+		float precio;
+		
+		if(duracion == 60 ) {
+			precio = 20;
+		}
+		else if(duracion == 90) {
+			precio = 30;
+		}
+		else
+		{
+			precio = 40;
+		}
+		
+		return precio;
 	}
 	
 	

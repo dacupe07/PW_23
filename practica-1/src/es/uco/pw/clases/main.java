@@ -10,6 +10,7 @@ public class main
 	{
 		kart k = kart.getKart(0, null, null);
 		pista p = pista.getPista(null, null, null, 0);
+		Reserva r = new Reserva();
 		Scanner entrada = new Scanner(System.in);
 		Scanner variables = new Scanner(System.in);
 		ArrayList<String> PistaKart = new ArrayList<String>();
@@ -67,6 +68,34 @@ public class main
 			// Listar Karts disponibles (Que no esten en mantenimiento ni reservados)
 			System.out.println("10. Listar karts disponibles");
 			
+			System.out.println("\nSECCION RESERVAS");
+			System.out.println("----------------------");
+			
+			/*Realizar una reserva por parte de un usuario ya registrado para una pista que cumpla las condiciones establecidas.
+			  Si el usuario tiene una antigëdad mayor a dos años, se le aplica un descuento de 10%. La reserva se debe realizar con 24h de antelación.
+			 */
+			System.out.println("11. Realizar Reserva Individual (NO IMPLEMENTADA)");
+			
+			/*Realizar reserva para un usuario con un bono activo. El precio de la reserva
+			  dentro de este bono tiene un descuento del 5% con respecto al precio original 
+			  según la duración de la reserva. No existe rebaja por antigëdad.
+			 */
+			System.out.println("12. Realizar Reserva con bono. (NO IMPLEMENTADA");
+			
+			//Sacar un bono de reservas de un determinado tipo y con posibilidad a 5 reservas.
+			System.out.println("13. Sacar Bono de reservas. (NO IMPLEMENTADA)");
+			
+			//Se permite modificar la reserva con 24h de antelación.
+			System.out.println("14. Modificar Reserva. (NO IMPLEMENTADA)");
+			
+			//Se permite cancelar la reserva con 24h de antelación.
+			System.out.println("15. Cancelar Reserva. (NO IMPLEMENTADA)");
+			
+			//Se permite consultar el número de reservas existentes a partir de la fecha de consulta. 
+			System.out.println("16. Consultar reservas a partir de hoy. (NO IMPLEMENTADA)");
+			
+			//Se permite consultar las reservas existentes para un día y una fecha determinada.
+			System.out.println("17. Consultar reservas de una pista y día concreto. (NO IMPLEMENTADA)");
 			
 			
 			System.out.println("\n----------------------");
@@ -120,6 +149,35 @@ public class main
 			case 10:
 				PistaKart.clear();
 				PistaKart = p.consultarKartsDisponibles();
+				break;
+				
+			case 11:
+				r.crearReservaIndividual();
+				
+				break;
+				
+			case 12:
+				r.crearReservaBono();
+				break;
+			
+			case 13:
+				
+				break;
+			
+			case 14:
+				
+				break;
+				
+			case 15:
+				
+				break;
+				
+			case 16:
+				
+				break;
+				
+			case 17:
+				
 				break;
 			}
 		}
