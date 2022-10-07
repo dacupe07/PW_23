@@ -3,13 +3,13 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Reserva {
-	private int idUsuario;
+	private String idUsuario;
 	private Date fecha;
-	private Date hora;
 	private int duracion;
 	private String pista;
 	private float precio;
 	private float descuentoAntigüedad;
+	private dificultad especialidad;
 	
 	public Reserva() {
 		
@@ -19,13 +19,13 @@ public class Reserva {
 	/**
 	 * @return the idUsuario
 	 */
-	public int getIdUsuario() {
+	public String getIdUsuario() {
 		return idUsuario;
 	}
 	/**
 	 * @param idUsuario the idUsuario to set
 	 */
-	public void setIdUsuario(int idUsuario) {
+	public void setIdUsuario(String idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 	/**
@@ -41,18 +41,6 @@ public class Reserva {
 		this.fecha = fecha;
 	}
 	/**
-	 * @return the hora
-	 */
-	public Date getHora() {
-		return hora;
-	}
-	/**
-	 * @param hora the hora to set
-	 */
-	public void setHora(Date hora) {
-		this.hora = hora;
-	}
-	/**
 	 * @return the duracion
 	 */
 	public int getDuracion() {
@@ -63,18 +51,6 @@ public class Reserva {
 	 */
 	public void setDuracion(int duracion) {
 		this.duracion = duracion;
-	}
-	/**
-	 * @return the pista
-	 */
-	public String getNombrePista() {
-		return pista;
-	}
-	/**
-	 * @param nombrePista the nombrePista to set
-	 */
-	public void setNombrePista(String pista) {
-		this.pista = pista;
 	}
 	/**
 	 * @return the precio
@@ -100,10 +76,41 @@ public class Reserva {
 	public void setDescuentoAntigüedad(float descuentoAntigüedad) {
 		this.descuentoAntigüedad = descuentoAntigüedad;
 	}
+	/**
+	 * @return the pista
+	 */
+	public String getPista() {
+		return pista;
+	}
+
+
+	/**
+	 * @param pista the pista to set
+	 */
+	public void setPista(String pista) {
+		this.pista = pista;
+	}
+
+
+	/**
+	 * @return the especialidad
+	 */
+	public dificultad getEspecialidad() {
+		return especialidad;
+	}
+
+
+	/**
+	 * @param especialidad the especialidad to set
+	 */
+	public void setEspecialidad(dificultad especialidad) {
+		this.especialidad = especialidad;
+	}
+
 
 	public String toString() {
-		String info = "\n--- INFORMACION INTRODUCIDA --- \n ID Usuario=" + idUsuario + ", Fecha=" + fecha + ", Hora=" + hora + ", Duracion=" + duracion
-				+ ", Pista=" + pista + ", Precio=" + precio + ", Descuento por Antigüedad=" + descuentoAntigüedad + "\n\n";
+		String info = "\n--- INFORMACION INTRODUCIDA --- \n ID Usuario=" + idUsuario + ", Fecha=" + fecha + ", Duracion=" + duracion
+				+ ", Pista=" + pista + ", Especialidad=" + especialidad +", Precio=" + precio + ", Descuento por Antigüedad=" + descuentoAntigüedad + "\n\n";
 		return info;
 	}
 	
@@ -147,6 +154,7 @@ public class Reserva {
 		
 		case 0:
 			reservaIndividual.createReservaAdultos();
+			
 			break;
 		case 1:
 			reservaIndividual.createReservaFamiliar();
@@ -175,10 +183,6 @@ public class Reserva {
 		
 		return precio;
 	}
-	
-	
-
-	
 	
 	
 }
