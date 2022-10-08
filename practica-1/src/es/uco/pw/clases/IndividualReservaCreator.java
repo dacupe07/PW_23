@@ -17,15 +17,16 @@ public class IndividualReservaCreator extends ReservaCreator {
 	float precioFinal;
 	float descuento;
 	int antiguedad=3;
-	
-	
-	
+	Boolean disponible=false;
+	dificultad especialidad;
+	pista p = new pista();
 	
 	@Override
 	public ReservaAdultos createReservaAdultos() {
 		
 		ReservaAdultos reservaAdultos = new ReservaAdultos();
 		int nAdultos;
+		
 		
 		//================COMENZAMOS PIDIENDO DATOS POR PANTALLA==================================
 		
@@ -71,7 +72,23 @@ public class IndividualReservaCreator extends ReservaCreator {
 		//PISTA QUE SE DESEA RESERVAR
 		System.out.println("\nIntroduzca el nombre de la Pista que desea reservar: ");
 		pista= lector.nextLine();
-		reservaAdultos.setPista(pista);
+		
+		
+		try {
+			disponible = p.pistaCumpleCondiciones(pista, "ADULTOS");
+			
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		if(disponible == true) {
+			System.out.println("\n La pista cumple con las condiciones.");
+			reservaAdultos.setPista(pista);
+		}else {
+			System.out.println("\n La pista no cumple con las condiciones. \n ");
+			System.out.println("Saliendo del gestor...");
+			System.exit(1);
+		}
 		
 		
 		//Nº DE ADULTOS PARTICIPANTES
@@ -107,7 +124,7 @@ public class IndividualReservaCreator extends ReservaCreator {
 			
 			//Establecemos los datos que queremos volvar al fichero y además, se escriben en este
 			fw.write("Nombre: " + reservaAdultos.getIdUsuario() + ". Pista: "+reservaAdultos.getPista() +". Fecha: "+reservaAdultos.getFecha()+". Duracion: "+reservaAdultos.getDuracion()
-					+". NºAdultos: "+reservaAdultos.getnAdultos()+". Especialidad: "+reservaAdultos.getEspecialidad()+". Descuento: "+reservaAdultos.getDescuentoAntigüedad());	
+					+". NºAdultos: "+reservaAdultos.getnAdultos()+". Especialidad: "+reservaAdultos.getEspecialidad()+". Descuento: "+reservaAdultos.getDescuentoAntigüedad()+"\n");	
 			
 			//Se cierra el fichero
 			fw.close();
@@ -167,7 +184,21 @@ public class IndividualReservaCreator extends ReservaCreator {
 		//PISTA QUE SE DESEA RESERVAR
 		System.out.println("\nIntroduzca el nombre de la Pista que desea reservar: ");
 		pista= lector.nextLine();
-		reserva.setPista(pista);
+		
+		try {
+			disponible = p.pistaCumpleCondiciones(pista, "FAMILIAR");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		if(disponible == true) {
+			System.out.println("\n La pista cumple con las condiciones.");
+			reserva.setPista(pista);
+		}else {
+			System.out.println("\n La pista no cumple con las condiciones. \n ");
+			System.out.println("Saliendo del gestor...");
+			System.exit(1);
+		}
 		
 		
 		//Nº DE ADULTOS PARTICIPANTES
@@ -270,7 +301,22 @@ public class IndividualReservaCreator extends ReservaCreator {
 		//PISTA QUE SE DESEA RESERVAR
 		System.out.println("\nIntroduzca el nombre de la Pista que desea reservar: ");
 		pista= lector.nextLine();
-		reserva.setPista(pista);
+		
+		try {
+			disponible = p.pistaCumpleCondiciones(pista, "INFANTIL");
+			
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		if(disponible == true) {
+			System.out.println("\n La pista cumple con las condiciones.");
+			reserva.setPista(pista);
+		}else {
+			System.out.println("\n La pista no cumple con las condiciones. \n ");
+			System.out.println("Saliendo del gestor...");
+			System.exit(1);
+		}
 		
 		
 		//Nº DE NIÑOS PARTICIPANTES

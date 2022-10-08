@@ -1,4 +1,9 @@
 package es.uco.pw.clases;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -183,6 +188,47 @@ public class Reserva {
 		
 		return precio;
 	}
+	/*
+	public void eliminarReserva() {
+		try
+		{
+			File f1 = new File("Bonos.txt");
+			File temp = new File("BonosAuxiliar.txt");
+			
+			// CREAMOS EL WRITER Y EL READER PARA LOS FICHEROS
+			FileWriter writer = new FileWriter(temp, true);
+			BufferedReader reader = new BufferedReader(new FileReader(f1));
+			
+			String lineactual;
+			
+			// CONTROLAMOS QUE NO SE SALGA DEL FICHERO
+			while((lineactual = reader.readLine()) != null)
+			{
+				// trim() -> Para eliminar los espacios al leer
+				String trimmedLine = lineactual.trim();
+				
+				// COMPROBAMOS SI LA LINEA TIENE EL NOMBRE INTRODUCIDO, SI NO LO TIENE SE INTRODUCE EN EL FICHERO DE ESCRITURA
+				if(!trimmedLine.contains(nombre))
+				{
+					writer.write(lineactual + "\n");
+				}
+			}
+			
+			// CIERRE DE LOS FICHEROS
+			writer.close();
+			reader.close();
+			
+			// BORRAMOS EL FICHERO ORIGINAL Y AL NUEVO LE CAMBIAMOS EL NOMBRE POR EL DEL ORIGINAL
+			f1.delete();
+			temp.renameTo(f1);
+			
+			
+		}catch (IOException e) {
+			System.out.print("\nERROR AL ESCRIBIR EN EL FICHERO " + e.getMessage() + "\n");
+		}
+		
+	}
+	*/
 	
 	
 }
