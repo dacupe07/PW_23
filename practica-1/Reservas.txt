@@ -1,1 +1,1 @@
-Nombre: javier. Pista: mollerusa. Fecha: null. Duracion: 60. NºAdultos: 8. Especialidad: ADULTOS. Descuento: 2.0
+Nombre: javier. Pista: mollerusa. Fecha: null. Duracion: 120. NºAdultos: 3.NºNiños: 5. Especialidad: FAMILIAR. Descuento: 4.0
