@@ -17,6 +17,7 @@ public class main
 		pista p = pista.getPista(null, null, null, 0);
 		Reserva r = new Reserva();
 		usuario u = usuario.getUsuario(null, null, null, null);
+		Bono b = new Bono();
 		Scanner entrada = new Scanner(System.in);
 		Scanner variables = new Scanner(System.in);
 		ArrayList<String> PistaKart = new ArrayList<String>();
@@ -82,16 +83,16 @@ public class main
 			/*Realizar una reserva por parte de un usuario ya registrado para una pista que cumpla las condiciones establecidas.
 			  Si el usuario tiene una antigëdad mayor a dos años, se le aplica un descuento de 10%. La reserva se debe realizar con 24h de antelación.
 			 */
-			System.out.println("11. Realizar Reserva Individual (NO IMPLEMENTADA)");
+			System.out.println("11. Realizar Reserva Individual. ");
 			
 			/*Realizar reserva para un usuario con un bono activo. El precio de la reserva
 			  dentro de este bono tiene un descuento del 5% con respecto al precio original 
 			  según la duración de la reserva. No existe rebaja por antigëdad.
 			 */
-			System.out.println("12. Realizar Reserva con bono. (NO IMPLEMENTADA");
+			System.out.println("12. Realizar Reserva con bono.");
 			
 			//Sacar un bono de reservas de un determinado tipo y con posibilidad a 5 reservas.
-			System.out.println("13. Sacar Bono de reservas. (NO IMPLEMENTADA)");
+			System.out.println("13. Sacar Bono de reservas.");
 			
 			//Se permite modificar la reserva con 24h de antelación.
 			System.out.println("14. Modificar Reserva. (NO IMPLEMENTADA)");
@@ -183,15 +184,17 @@ public class main
 				
 			case 11:
 				r.crearReservaIndividual();
-				
+				System.out.print(r.toString());
 				break;
 				
 			case 12:
 				r.crearReservaBono();
+				System.out.print(r.toString());
 				break;
 			
 			case 13:
-				
+				b.sacarBono();
+				System.out.print(b.toString());
 				break;
 			
 			case 14:
