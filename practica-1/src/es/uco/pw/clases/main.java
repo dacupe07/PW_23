@@ -1,20 +1,27 @@
 package es.uco.pw.clases;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.*;
+import java.time.format.*;
+import java.text.*;
+
 
 public class main 
 {
-	public static void main(String[] args) throws FileNotFoundException, IOException
+	public static void main(String[] args) throws FileNotFoundException, IOException, ParseException
 	{
 		kart k = kart.getKart(0, null, null);
 		pista p = pista.getPista(null, null, null, 0);
 		Reserva r = new Reserva();
+		usuario u = usuario.getUsuario(null, null, null, null);
 		Scanner entrada = new Scanner(System.in);
 		Scanner variables = new Scanner(System.in);
 		ArrayList<String> PistaKart = new ArrayList<String>();
 		ArrayList<String> kartAsociados = new ArrayList<String>();
+		ArrayList<String> Usuarios = new ArrayList<String>();
 		
 		int opcion = 1;
 		
@@ -26,16 +33,17 @@ public class main
 			System.out.println("SECCION USUARIO");
 			System.out.println("-----------------------");
 			// Dar de alta a un usuario comprobando que no est� registrado previamente
-			System.out.println("1. Dar de alta a un usuario (NO IMPLEMENTADA)");
+			System.out.println("1. Dar de alta a un usuario");
 			
 			// Dar de baja a un usuario
-			System.out.println("2. Dar de baja a un usuario (NO IMPLEMENTADA)");
+			System.out.println("2. Dar de baja a un usuario (¿?)");
 			
 			// Consultar los datos de un usuario
-			System.out.println("3. Consultar datos del usuario (NO IMPLEMENTADA)");
+			System.out.println("3. Listar usuarios actualmente registrados");
 			
 			// Modificar la informacion de un usuario
-			System.out.println("4. Actualizar datos de un usuario (NO IMPLEMENTADA)");
+			System.out.println("4. Actualizar datos de un usuario");
+			
 			
 			System.out.println("\nSECCION PISTA");
 			System.out.println("------------------------");
@@ -111,15 +119,37 @@ public class main
 				break;
 				
 			case 1:
+				LocalDate localDate = LocalDate.now();//For reference
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd//MM//yyyy");
+				String fecha = localDate.format(formatter);
+
+				u.setFechaInscripcion(fecha);
+				u.darAltaUsuario();
 				break;
 				
 			case 2:
-				break;
+				// Introducimos el email del usuario que queremos borrar
+				/*System.out.print("Introduzca el email que desea dar de baja: ");
+				c.setEmail(variables.nextLine());
+				c.darBajaUsuario(c.getEmail());
+				break;*/
 				
 			case 3:
+				Usuarios.clear();
+				Usuarios = u.listarUsuarios();
+				
+				for(String A: Usuarios)
+				{
+					System.out.println(A + "\n");
+					System.out.print("\n");
+				}
+				System.out.println("\n");
 				break;
 				
 			case 4:
+				System.out.print("Introduzca el email del usuario que desea actualizar: ");
+				u.setEmail(variables.nextLine());
+				u.actualizarUsuario(u.getEmail());
 				break;
 				
 			case 5:
