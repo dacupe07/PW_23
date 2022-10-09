@@ -1,6 +1,5 @@
 package es.uco.pw.clases;
 
-
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -13,15 +12,15 @@ import java.io.*;
 public class usuario {
 	
 	private String nombre;
-	private LocalDate fecha_nacimiento;
-	private LocalDate fecha_inscripcion;
+	private Date fecha_nacimiento;
+	private Date fecha_inscripcion;
 	private String email;
 	
 	private static usuario Usuario = null;
 	
 	public usuario() {}
 	
-	public static usuario getUsuario(String nombre, LocalDate fecha_nacimiento, LocalDate fecha_inscripcion, String email) {
+	public static usuario getUsuario(String nombre, Date fecha_nacimiento, Date fecha_inscripcion, String email) {
 		
 		if(Usuario == null) {
 			
@@ -31,7 +30,7 @@ public class usuario {
 		return Usuario;
 	}
 	
-	public usuario(String nombre, LocalDate fecha_nacimiento, LocalDate fecha_inscripcion, String email) {
+	public usuario(String nombre, Date fecha_nacimiento, Date fecha_inscripcion, String email) {
 	
 		this.nombre = nombre;
 		this.fecha_nacimiento = fecha_nacimiento;
@@ -69,7 +68,7 @@ public class usuario {
 	 * @return fecha_nacimiento
 	 */
 	
-	public LocalDate getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		
 		return fecha_nacimiento;
 	}
@@ -81,10 +80,12 @@ public class usuario {
 	 * @return fecha_nacimiento
 	 */
 	
-	public void setFechaNacimiento(String fecha) throws ParseException {		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		LocalDate ld = LocalDate.parse(fecha, formatter);
-		this.fecha_nacimiento = ld;
+	public void setFechaNacimiento(String fecha) throws ParseException {
+		SimpleDateFormat date = new SimpleDateFormat("dd//MM//yyyy");
+		Date temp = date.parse(fecha);
+		fecha_nacimiento = temp;
+		
+		
 	}
 	
 	
@@ -94,7 +95,7 @@ public class usuario {
 	 * @return fecha_inscripcion
 	 */
 	
-	public LocalDate getFechaInscripcion() {
+	public Date getFechaInscripcion() {
 		
 		return fecha_inscripcion;
 	}
@@ -106,14 +107,10 @@ public class usuario {
 	 * @return fecha_inscripcion
 	 */
 	
-	public void setFechaInscripcion() throws ParseException {
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		LocalDate localdatenow = LocalDate.now();
-		String ld_str = localdatenow.format(formatter);
-		LocalDate ld = LocalDate.parse(ld_str, formatter);
-		this.fecha_inscripcion = ld;
-
+	public void setFechaInscripcion(String fecha) throws ParseException {
+		SimpleDateFormat date = new SimpleDateFormat("dd//MM//yyyy");
+		Date temp = date.parse(fecha);
+		fecha_inscripcion = temp;
 	}
 	
 	/**
@@ -183,7 +180,7 @@ public class usuario {
 		nombre = lector.nextLine();
 		setNombre(nombre);
 		
-		System.out.print("Introduce la fecha de nacimiento del usuario (dd-MM-yyyy): ");
+		System.out.print("Introduce la fecha de nacimiento del usuario: ");
 		String fecha_nacimiento = lector.nextLine();
 		setFechaNacimiento(fecha_nacimiento);
 		
@@ -205,7 +202,7 @@ public class usuario {
 			
 				// COMPROBAMOS QUE LA LINEA TENGA EL EMAIL INTRODUCIDO, EN CASO CONTRARIO NO SE INTRODUCE EL FICHERO DE ESCRITURA
 				if(trimmedLine.contains(email))	{
-					System.out.print("\nEl email que has introducido ya se encuentra registrado\n");
+					System.out.print("El email que has introducido ya se encuentra registrado");
 					controlador = false;
 				}
 			}
@@ -221,11 +218,11 @@ public class usuario {
 		}
 		
 		catch(Exception e)	{
-			System.out.print("\nError al escribir en el fichero" + e.getMessage() + "\n");
+			System.out.print("Error al escribir en el fichero" + e.getMessage());
 		}
 	}
 	
-	public void darBajaUsuario(String email) throws IOException, FileNotFoundException
+	/*public void darBajaUsuario(String email) throws IOException, FileNotFoundException
 	{
 		File f1 = new File("Usuarios.txt");
 		File temp = new File("UsuariosAuxiliar.txt");
@@ -243,12 +240,9 @@ public class usuario {
 			String trimmedLine = lineactual.trim();
 			
 			// COMPROBAMOS SI LA LINEA TIENE EL EMAIL INTRODUCIDO, SI NO LO TIENE SE INTRODUCE EN EL FICHERO DE ESCRITURA
-			if(!trimmedLine.contains(email))	{
+			if(!trimmedLine.contains(email))
+			{
 				writer.write(lineactual + "\n");
-			}
-			else {
-				System.out.print("\n¡Usuario eliminado con exito!\n");
-				
 			}
 		}
 		
@@ -260,7 +254,8 @@ public class usuario {
 		f1.delete();
 		temp.renameTo(f1);
 		
-	}
+		System.out.print("¡Usuario eliminado con exito!");
+	}*/
 	
 	/**
 	 * Esta funcion muestra todos los usuarios que se encuentran en el fichero
@@ -296,13 +291,10 @@ public class usuario {
 	 */
 	public void actualizarUsuario(String email) throws IOException, FileNotFoundException, ParseException	{
 		Scanner lector = new Scanner(System.in);
-		Boolean controlador = true;
 		
 		// ABRIMOS LOS FICHEROS DE ESCRITURA Y LECTURA
 		File f2 = new File("Usuarios.txt");
 		File temp2 = new File("UsuariosAuxiliar.txt");
-		BufferedReader reader = new BufferedReader(new FileReader(f2));
-
 		BufferedReader reader2 = new BufferedReader(new FileReader(f2));
 		BufferedWriter writer2 = new BufferedWriter(new FileWriter(temp2));
 		
@@ -313,47 +305,26 @@ public class usuario {
 			String trimmedLine = linea2.trim();
 			
 			// VEMOS SI LA LINEA CONTIENE EL EMAIL INTRODUCIDO, SI NO LO CONTIENE SE INTRODUCE EN EL FICHERO DE ESCRITURA
-			if(!trimmedLine.contains(email))	{
+			if(!trimmedLine.contains(email))
+			{
 				writer2.write(linea2 + "\n");
-			}
-			
-			else {
-				System.out.print("Introduce nombre y apellidos del usuario: ");
-				String nombre = lector.nextLine();
-				setNombre(nombre);
-				
-				System.out.print("Introduce la fecha de nacimiento del usuario (dd-MM-yyyy): ");
-				String fecha_nacimiento = lector.nextLine();
-				setFechaNacimiento(fecha_nacimiento);
-				
-				
-				System.out.print("Introduce el email del usuario: ");
-				email = lector.nextLine();
-				setEmail(email); 
-				
-				String lineactual;
-				
-				// REALIZAMOS EL CONTROL PARA QUE NO SALGA DEL FICHERO
-				while((lineactual = reader.readLine()) != null || controlador == false)	{
-					String trimmedLine2 = lineactual.trim();
-				
-					// COMPROBAMOS QUE LA LINEA TENGA EL EMAIL INTRODUCIDO, EN CASO CONTRARIO NO SE INTRODUCE EL FICHERO DE ESCRITURA
-					if(trimmedLine2.contains(email))	{
-						System.out.print("\nEl email que has introducido ya se encuentra registrado\n");
-						controlador = false;
-					}
-				}
-			
-				if(controlador == true)	{
-					// ESCRIBIMOS EN EL FICHERO LOS DATOS QUE INTRODUCIMOS ANTERIORMENTE
-					writer2.write("Email: " + getEmail() + ". Nombre: " + getNombre() + ". Fecha de nacimiento: " + getFechaNacimiento() + ". Fecha de inscripcion: " + getFechaInscripcion() + "\n");
-				}
-								
 			}
 		}
 		
+		System.out.print("Introduce nombre y apellidos del usuario: ");
+		nombre = lector.nextLine();
+		setNombre(nombre);
 		
-		reader.close();
+		System.out.print("Introduce la fecha de nacimiento del usuario: ");
+		String fecha_nacimiento = lector.nextLine();
+		setFechaNacimiento(fecha_nacimiento);
+		
+		System.out.print("Introduce el email del usuario: ");
+		email = lector.nextLine();
+		setEmail(email);
+		
+		writer2.write("Email: " + getEmail() + ". Nombre: " + getNombre() + ". Fecha de nacimiento: " + getFechaNacimiento() + ". Fecha de inscripcion: " + getFechaInscripcion() + "\n");
+		
 		writer2.close();
 		reader2.close();
 		
