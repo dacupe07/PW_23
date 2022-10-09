@@ -1,1 +1,1 @@
-Nombre: javier. Pista: mollerusa. Fecha: null. Duracion: 120. NºAdultos: 3.NºNiños: 5. Especialidad: FAMILIAR. Descuento: 4.0
+Nombre: javier gallardo morales. Pista: mollerusa. Fecha: 2022-10-20. Hora: 18:00. Duracion: 90. NºAdultos: 20. Especialidad: ADULTOS. Descuento: 3.0
