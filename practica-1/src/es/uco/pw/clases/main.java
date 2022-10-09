@@ -4,8 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.time.*;
-import java.time.format.*;
 import java.text.*;
 
 
@@ -28,7 +26,7 @@ public class main
 		
 		while(opcion != 0)
 		{
-			System.out.println("0. Salir");
+			System.out.println("\n0. Salir\n");
 			
 			
 			System.out.println("SECCION USUARIO");
@@ -37,7 +35,7 @@ public class main
 			System.out.println("1. Dar de alta a un usuario");
 			
 			// Dar de baja a un usuario
-			System.out.println("2. Dar de baja a un usuario (¿?)");
+			System.out.println("2. Dar de baja a un usuario");
 			
 			// Consultar los datos de un usuario
 			System.out.println("3. Listar usuarios actualmente registrados");
@@ -83,16 +81,16 @@ public class main
 			/*Realizar una reserva por parte de un usuario ya registrado para una pista que cumpla las condiciones establecidas.
 			  Si el usuario tiene una antigëdad mayor a dos años, se le aplica un descuento de 10%. La reserva se debe realizar con 24h de antelación.
 			 */
-			System.out.println("11. Realizar Reserva Individual. ");
+			System.out.println("11. Realizar Reserva Individual");
 			
 			/*Realizar reserva para un usuario con un bono activo. El precio de la reserva
 			  dentro de este bono tiene un descuento del 5% con respecto al precio original 
 			  según la duración de la reserva. No existe rebaja por antigëdad.
 			 */
-			System.out.println("12. Realizar Reserva con bono.");
+			System.out.println("12. Realizar Reserva con bono");
 			
 			//Sacar un bono de reservas de un determinado tipo y con posibilidad a 5 reservas.
-			System.out.println("13. Sacar Bono de reservas.");
+			System.out.println("13. Sacar Bono de reservas");
 			
 			//Se permite modificar la reserva con 24h de antelación.
 			System.out.println("14. Modificar Reserva. (NO IMPLEMENTADA)");
@@ -108,32 +106,28 @@ public class main
 			
 			
 			System.out.println("\n----------------------");
-			System.out.print("Introduzca la opcion deseada: ");
+			System.out.print("\nIntroduzca la opcion deseada: ");
 			opcion = entrada.nextInt();
 			entrada.nextLine();
 			
 			switch(opcion)
 			{
 			case 0:
-				System.out.println("Saliendo del gestor...");
+				System.out.println("Saliendo del gestor...\n");
 				System.exit(1);
 				break;
 				
 			case 1:
-				LocalDate localDate = LocalDate.now();//For reference
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd//MM//yyyy");
-				String fecha = localDate.format(formatter);
-
-				u.setFechaInscripcion(fecha);
+				u.setFechaInscripcion();
 				u.darAltaUsuario();
 				break;
 				
 			case 2:
 				// Introducimos el email del usuario que queremos borrar
-				/*System.out.print("Introduzca el email que desea dar de baja: ");
-				c.setEmail(variables.nextLine());
-				c.darBajaUsuario(c.getEmail());
-				break;*/
+				System.out.print("Introduzca el email que desea dar de baja: ");
+				u.setEmail(variables.nextLine());
+				u.darBajaUsuario(u.getEmail());
+				break;
 				
 			case 3:
 				Usuarios.clear();
@@ -185,6 +179,7 @@ public class main
 			case 11:
 				r.crearReservaIndividual();
 				System.out.print(r.toString());
+				
 				break;
 				
 			case 12:
@@ -195,6 +190,7 @@ public class main
 			case 13:
 				b.sacarBono();
 				System.out.print(b.toString());
+				
 				break;
 			
 			case 14:
@@ -214,5 +210,6 @@ public class main
 				break;
 			}
 		}
+
 	}
 }
