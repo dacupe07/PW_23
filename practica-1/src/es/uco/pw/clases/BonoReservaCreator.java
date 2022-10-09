@@ -10,19 +10,20 @@ public class BonoReservaCreator extends ReservaCreator{
 	//DECLARACIÓN DE VARIABLES AUXILIARES Y COMUNES
 		Scanner lector = new Scanner(System.in);
 		String nombre;
-		String fechaAux;
+		String fecha;
+		String hora;
 		int duracion;
 		String pista;
 		float precio;
 		float precioFinal;
 		float descuento;
 		int antiguedad=3;
-		Boolean disponible=false;
-		Boolean tieneBono= false;
+		Boolean aux=false;
 		dificultad especialidad;
 		pista p = new pista();
 		Bono b = new Bono();
 		int sesiones;
+		usuario u = new usuario();
 	
 	@Override
 	public ReservaAdultos createReservaAdultos() {
@@ -37,13 +38,27 @@ public class BonoReservaCreator extends ReservaCreator{
 		System.out.println("\nPara la realización de la reserva, introduzca su nombre: ");
 		nombre= lector.nextLine();
 		
+		//COMPROBAMOS QUE EL USUARIO ESTÁ REGISTRADO EN EL SISTEMA
 		try {
-			tieneBono = b.tieneBono(nombre, "ADULTOS");
+			aux = u.isUsuarioRegistrado(nombre);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
-		if(tieneBono == true) {
+		if(aux == false) {
+			System.out.println("\n El usuario no está registrado en el sistema. Registrese antes de realizar una reserva.\n ");
+			System.out.println("Saliendo del gestor...");
+			System.exit(1);
+		}
+		
+		//COMPROBAMOS QUE EL USUARIO DISPONE DE BONO
+		try {
+			aux = b.tieneBono(nombre, "ADULTOS");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		if(aux == true) {
 			System.out.println("\n El usuario introducido tiene bono de tipo Adulto.");
 			reservaAdultos.setIdUsuario(nombre);
 		}else {
@@ -52,23 +67,14 @@ public class BonoReservaCreator extends ReservaCreator{
 			System.exit(1);
 		}
 		//FECHA
-		/*
+		System.out.println("\nIntroduzca la fecha con el siguiente formato: [dd-MM-yyyy]");
+		fecha= lector.nextLine();
+		reservaAdultos.setFecha(fecha);
 		
-		System.out.println("\nIntroduzca la fecha y hora de la reserva en el siguiente formato: dd/mm/yyyy HH:mm:ss");
-		fechaAux= lector.nextLine();
-		
-		try {
-			SimpleDateFormat formato = new SimpleDateFormat("dd//MM//yyyy HH:mm:ss");
-			Date fecha = formato.parse("12/07/2023 12:00:00");
-			reservaAdultos.setFecha(fecha);
-			System.out.println("Fecha: "+fecha);
-			
-		} catch (ParseException e) {
-			
-			e.printStackTrace();
-		}
-		
-		*/
+		//HORA
+		System.out.println("\nIntroduzca la hora con el siguiente formato: [hh:mm]24h");
+		hora= lector.nextLine();
+		reservaAdultos.setHora(hora);
 		
 		//DURACION DE LA RESERVA
 		System.out.println("\nIntroduce la duracion de la reserva en minutos (60 // 90 // 120):");
@@ -90,13 +96,13 @@ public class BonoReservaCreator extends ReservaCreator{
 		
 		
 		try {
-			disponible = p.pistaCumpleCondiciones(pista, "ADULTOS");
+			aux = p.pistaCumpleCondiciones(pista, "ADULTOS", fecha, hora);
 			
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
-		if(disponible == true) {
+		if(aux == true) {
 			System.out.println("\n La pista cumple con las condiciones.");
 			reservaAdultos.setPista(pista);
 		}else {
@@ -167,12 +173,24 @@ public class BonoReservaCreator extends ReservaCreator{
 		nombre= lector.nextLine();
 		
 		try {
-			tieneBono = b.tieneBono(nombre, "FAMILIAR");
+			aux = u.isUsuarioRegistrado(nombre);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
-		if(tieneBono == true) {
+		if(aux == false) {
+			System.out.println("\n El usuario no está registrado en el sistema. Registrese antes de realizar una reserva.\n ");
+			System.out.println("Saliendo del gestor...");
+			System.exit(1);
+		}
+		
+		try {
+			aux = b.tieneBono(nombre, "FAMILIAR");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		if(aux == true) {
 			System.out.println("\n El usuario introducido tiene bono de tipo Familiar.");
 			reserva.setIdUsuario(nombre);
 		}else {
@@ -180,24 +198,16 @@ public class BonoReservaCreator extends ReservaCreator{
 			System.out.println("Saliendo del gestor...");
 			System.exit(1);
 		}
+		
 		//FECHA
-		/*
+		System.out.println("\nIntroduzca la fecha con el siguiente formato: [dd-MM-yyyy]");
+		fecha= lector.nextLine();
+		reserva.setFecha(fecha);
 		
-		System.out.println("\nIntroduzca la fecha y hora de la reserva en el siguiente formato: dd/mm/yyyy HH:mm:ss");
-		fechaAux= lector.nextLine();
-		
-		try {
-			SimpleDateFormat formato = new SimpleDateFormat("dd//MM//yyyy HH:mm:ss");
-			Date fecha = formato.parse("12/07/2023 12:00:00");
-			reservaAdultos.setFecha(fecha);
-			System.out.println("Fecha: "+fecha);
-			
-		} catch (ParseException e) {
-			
-			e.printStackTrace();
-		}
-		
-		*/
+		//HORA
+		System.out.println("\nIntroduzca la hora con el siguiente formato: [hh:mm]24h");
+		hora= lector.nextLine();
+		reserva.setHora(hora);
 		
 		//DURACION DE LA RESERVA
 		System.out.println("\nIntroduce la duracion de la reserva en minutos (60 // 90 // 120):");
@@ -219,13 +229,13 @@ public class BonoReservaCreator extends ReservaCreator{
 		
 		
 		try {
-			disponible = p.pistaCumpleCondiciones(pista, "FAMILIAR");
+			aux = p.pistaCumpleCondiciones(pista, "FAMILIAR", fecha, hora);
 			
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
-		if(disponible == true) {
+		if(aux == true) {
 			System.out.println("\n La pista cumple con las condiciones.");
 			reserva.setPista(pista);
 		}else {
@@ -289,7 +299,6 @@ public class BonoReservaCreator extends ReservaCreator{
 	@Override
 	public ReservaInfantil createReservaInfantil() {
 		ReservaInfantil reserva = new ReservaInfantil();
-		int nAdultos;
 		int nNiños;
 		
 		
@@ -300,12 +309,24 @@ public class BonoReservaCreator extends ReservaCreator{
 		nombre= lector.nextLine();
 		
 		try {
-			tieneBono = b.tieneBono(nombre, "INFANTIL");
+			aux = u.isUsuarioRegistrado(nombre);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
-		if(tieneBono == true) {
+		if(aux == false) {
+			System.out.println("\n El usuario no está registrado en el sistema. Registrese antes de realizar una reserva.\n ");
+			System.out.println("Saliendo del gestor...");
+			System.exit(1);
+		}
+		
+		try {
+			aux = b.tieneBono(nombre, "INFANTIL");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		if(aux == true) {
 			System.out.println("\n El usuario introducido tiene bono de tipo Infantil.");
 			reserva.setIdUsuario(nombre);
 		}else {
@@ -314,23 +335,14 @@ public class BonoReservaCreator extends ReservaCreator{
 			System.exit(1);
 		}
 		//FECHA
-		/*
+		System.out.println("\nIntroduzca la fecha con el siguiente formato: [dd-MM-yyyy]");
+		fecha= lector.nextLine();
+		reserva.setFecha(fecha);
 		
-		System.out.println("\nIntroduzca la fecha y hora de la reserva en el siguiente formato: dd/mm/yyyy HH:mm:ss");
-		fechaAux= lector.nextLine();
-		
-		try {
-			SimpleDateFormat formato = new SimpleDateFormat("dd//MM//yyyy HH:mm:ss");
-			Date fecha = formato.parse("12/07/2023 12:00:00");
-			reservaAdultos.setFecha(fecha);
-			System.out.println("Fecha: "+fecha);
-			
-		} catch (ParseException e) {
-			
-			e.printStackTrace();
-		}
-		
-		*/
+		//HORA
+		System.out.println("\nIntroduzca la hora con el siguiente formato: [hh:mm]24h");
+		hora= lector.nextLine();
+		reserva.setHora(hora);
 		
 		//DURACION DE LA RESERVA
 		System.out.println("\nIntroduce la duracion de la reserva en minutos (60 // 90 // 120):");
@@ -352,13 +364,13 @@ public class BonoReservaCreator extends ReservaCreator{
 		
 		
 		try {
-			disponible = p.pistaCumpleCondiciones(pista, "INFANTIL");
+			aux = p.pistaCumpleCondiciones(pista, "INFANTIL", fecha, hora);
 			
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
-		if(disponible == true) {
+		if(aux == true) {
 			System.out.println("\n La pista cumple con las condiciones.");
 			reserva.setPista(pista);
 		}else {
