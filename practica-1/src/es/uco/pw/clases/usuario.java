@@ -1,4 +1,4 @@
-package es.uco.pw.clases;
+package es.uco.pw.classes;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
