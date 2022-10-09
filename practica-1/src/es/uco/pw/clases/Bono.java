@@ -103,7 +103,7 @@ public class Bono {
 	
 	public void sacarBono() throws IOException, FileNotFoundException {
 		Bono b = new Bono();
-		String nombre;
+		String email;
 		String caducidad;
 		int especialidad;
 		int IDBono;
@@ -116,10 +116,10 @@ public class Bono {
 		IDBono= (int)(Math.random()*100+1);
 		b.setIDBono(IDBono);
 		
-		//Introducimos el nombre de la persona que saca el bono
-		System.out.println("Introduce el nombre de usuario: ");
-		nombre = lector.nextLine();
-		b.setUsuario(nombre);
+		//Introducimos el email de la persona que saca el bono
+		System.out.println("Introduce el email de usuario: ");
+		email = lector.nextLine();
+		b.setUsuario(email);
 		
 		//Establecemos la especialidad del bono:
 		System.out.println("Introduce la especialidad del bono que desea sacar: (0.Infantil// 1.Familiar// 2. Adultos) \n");
@@ -214,12 +214,12 @@ public class Bono {
 		return bonos;
 	}
 	
-	public Boolean tieneBono(String nombre, String especialidad) throws IOException, FileNotFoundException {
+	public Boolean tieneBono(String email, String especialidad) throws IOException, FileNotFoundException {
 		Bono bono= new Bono();
 		ArrayList<String> bonos = bono.listarBonos();
 		
 		for(String aux: bonos ) {
-			if(aux.contains(nombre) && aux.contains(especialidad)) {
+			if(aux.contains(email) && aux.contains(especialidad)) {
 				if(aux.contains("Sesiones: 0")) {
 					System.out.println("SESIONES AGOTADAS.");
 					return false;
@@ -232,7 +232,7 @@ public class Bono {
 		return false;
 	}
 	
-	public void eliminarBono(String nombre) {
+	public void eliminarBono(String email) {
 		try
 		{
 			File f1 = new File("Bonos.txt");
@@ -250,8 +250,8 @@ public class Bono {
 				// trim() -> Para eliminar los espacios al leer
 				String trimmedLine = lineactual.trim();
 				
-				// COMPROBAMOS SI LA LINEA TIENE EL NOMBRE INTRODUCIDO, SI NO LO TIENE SE INTRODUCE EN EL FICHERO DE ESCRITURA
-				if(!trimmedLine.contains(nombre))
+				// COMPROBAMOS SI LA LINEA TIENE EL EMAIL INTRODUCIDO, SI NO LO TIENE SE INTRODUCE EN EL FICHERO DE ESCRITURA
+				if(!trimmedLine.contains(email))
 				{
 					writer.write(lineactual + "\n");
 				}
@@ -261,7 +261,7 @@ public class Bono {
 			writer.close();
 			reader.close();
 			
-			// BORRAMOS EL FICHERO ORIGINAL Y AL NUEVO LE CAMBIAMOS EL NOMBRE POR EL DEL ORIGINAL
+			// BORRAMOS EL FICHERO ORIGINAL Y AL NUEVO LE CAMBIAMOS EL EMAIL POR EL DEL ORIGINAL
 			f1.delete();
 			temp.renameTo(f1);
 			

@@ -9,17 +9,19 @@ public class IndividualReservaCreator extends ReservaCreator {
 	
 	//DECLARACIÓN DE VARIABLES AUXILIARES Y COMUNES
 	Scanner lector = new Scanner(System.in);
-	String nombre;
-	String fechaAux;
+	String email;
+	String fecha;
+	String hora;
 	int duracion;
 	String pista;
 	float precio;
 	float precioFinal;
 	float descuento;
 	int antiguedad=3;
-	Boolean disponible=false;
+	Boolean aux=false;
 	dificultad especialidad;
 	pista p = new pista();
+	usuario u = new usuario();
 	
 	@Override
 	public ReservaAdultos createReservaAdultos() {
@@ -30,30 +32,33 @@ public class IndividualReservaCreator extends ReservaCreator {
 		
 		//================COMENZAMOS PIDIENDO DATOS POR PANTALLA==================================
 		
-		//NOMBRE
-		System.out.println("\nPara la realización de la reserva, introduzca su nombre: ");
-		nombre= lector.nextLine();
-		reservaAdultos.setIdUsuario(nombre);
-		
-		
-		//FECHA
-		/*
-		
-		System.out.println("\nIntroduzca la fecha y hora de la reserva en el siguiente formato: dd/mm/yyyy HH:mm:ss");
-		fechaAux= lector.nextLine();
+		//EMAIL
+		System.out.println("\nPara la realización de la reserva, introduzca su email: ");
+		email= lector.nextLine();
 		
 		try {
-			SimpleDateFormat formato = new SimpleDateFormat("dd//MM//yyyy HH:mm:ss");
-			Date fecha = formato.parse("12/07/2023 12:00:00");
-			reservaAdultos.setFecha(fecha);
-			System.out.println("Fecha: "+fecha);
-			
-		} catch (ParseException e) {
-			
-			e.printStackTrace();
+			aux = u.isUsuarioRegistrado(email);
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 		
-		*/
+		if(aux == true) {
+			reservaAdultos.setIdUsuario(email);
+		}else {
+			System.out.println("\n El usuario no está registrado en el sistema. Registrese antes de realizar una reserva.\n ");
+			System.out.println("Saliendo del gestor...");
+			System.exit(1);
+		}
+		
+		//FECHA
+		System.out.println("\nIntroduzca la fecha con el siguiente formato: [dd-MM-yyyy]");
+		fecha= lector.nextLine();
+		reservaAdultos.setFecha(fecha);
+		
+		//HORA
+		System.out.println("\nIntroduzca la hora con el siguiente formato: [hh:mm]24h");
+		hora= lector.nextLine();
+		reservaAdultos.setHora(hora);
 		
 		//DURACION DE LA RESERVA
 		System.out.println("\nIntroduce la duracion de la reserva en minutos (60 // 90 // 120):");
@@ -75,13 +80,13 @@ public class IndividualReservaCreator extends ReservaCreator {
 		
 		
 		try {
-			disponible = p.pistaCumpleCondiciones(pista, "ADULTOS");
+			aux = p.pistaCumpleCondiciones(pista, "ADULTOS", fecha, hora);
 			
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
-		if(disponible == true) {
+		if(aux == true) {
 			System.out.println("\n La pista cumple con las condiciones.");
 			reservaAdultos.setPista(pista);
 		}else {
@@ -123,7 +128,7 @@ public class IndividualReservaCreator extends ReservaCreator {
 			FileWriter fw = new FileWriter(fichero, true);
 			
 			//Establecemos los datos que queremos volvar al fichero y además, se escriben en este
-			fw.write("Nombre: " + reservaAdultos.getIdUsuario() + ". Pista: "+reservaAdultos.getPista() +". Fecha: "+reservaAdultos.getFecha()+". Duracion: "+reservaAdultos.getDuracion()
+			fw.write("Email: " + reservaAdultos.getIdUsuario() + ". Pista: "+reservaAdultos.getPista() +". Fecha: "+reservaAdultos.getFecha()+". Hora: "+reservaAdultos.getHora()+". Duracion: "+reservaAdultos.getDuracion()
 					+". NºAdultos: "+reservaAdultos.getnAdultos()+". Especialidad: "+reservaAdultos.getEspecialidad()+". Descuento: "+reservaAdultos.getDescuentoAntigüedad()+"\n");	
 			
 			//Se cierra el fichero
@@ -144,29 +149,34 @@ public class IndividualReservaCreator extends ReservaCreator {
 		
 		//================COMENZAMOS PIDIENDO DATOS POR PANTALLA==================================
 		
-		//NOMBRE
-		System.out.println("\nPara la realización de la reserva, introduzca su nombre: ");
-		nombre= lector.nextLine();
-		reserva.setIdUsuario(nombre);
-		
-		//FECHA
-		/*
-		
-		System.out.println("\nIntroduzca la fecha y hora de la reserva en el siguiente formato: dd/mm/yyyy HH:mm:ss");
-		fechaAux= lector.nextLine();
+		//EMAIL
+		System.out.println("\nPara la realización de la reserva, introduzca su email: ");
+		email= lector.nextLine();
 		
 		try {
-			SimpleDateFormat formato = new SimpleDateFormat("dd//MM//yyyy HH:mm:ss");
-			Date fecha = formato.parse("12/07/2023 12:00:00");
-			reservaAdultos.setFecha(fecha);
-			System.out.println("Fecha: "+fecha);
-			
-		} catch (ParseException e) {
-			
-			e.printStackTrace();
+			aux = u.isUsuarioRegistrado(email);
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 		
-		*/
+		if(aux == true) {
+			reserva.setIdUsuario(email);
+		}else {
+			System.out.println("\n El usuario no está registrado en el sistema. Registrese antes de realizar una reserva.\n ");
+			System.out.println("Saliendo del gestor...");
+			System.exit(1);
+		}
+		
+		//FECHA
+		System.out.println("\nIntroduzca la fecha con el siguiente formato: [dd-MM-yyyy]");
+		fecha= lector.nextLine();
+		reserva.setFecha(fecha);
+		
+		//HORA
+		System.out.println("\nIntroduzca la hora con el siguiente formato: [hh:mm]24h");
+		hora= lector.nextLine();
+		reserva.setHora(hora);
+				
 		//DURACION DE LA RESERVA
 		System.out.println("\nIntroduce la duracion de la reserva en minutos (60 // 90 // 120):");
 		duracion = lector.nextInt();
@@ -186,12 +196,12 @@ public class IndividualReservaCreator extends ReservaCreator {
 		pista= lector.nextLine();
 		
 		try {
-			disponible = p.pistaCumpleCondiciones(pista, "FAMILIAR");
+			aux = p.pistaCumpleCondiciones(pista, "FAMILIAR", fecha, hora);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
-		if(disponible == true) {
+		if(aux == true) {
 			System.out.println("\n La pista cumple con las condiciones.");
 			reserva.setPista(pista);
 		}else {
@@ -240,8 +250,8 @@ public class IndividualReservaCreator extends ReservaCreator {
 			FileWriter fw = new FileWriter(fichero, true);
 			
 			//Establecemos los datos que queremos volvar al fichero y además, se escriben en este
-			fw.write("Nombre: " + reserva.getIdUsuario() + ". Pista: "+reserva.getPista() +". Fecha: "+reserva.getFecha()+". Duracion: "+reserva.getDuracion()
-					+". NºAdultos: "+reserva.getnAdultos()+".NºNiños: "+reserva.getnNiños()+". Especialidad: "+reserva.getEspecialidad()+". Descuento: "+reserva.getDescuentoAntigüedad());	
+			fw.write("Email: " + reserva.getIdUsuario() + ". Pista: "+reserva.getPista() +". Fecha: "+reserva.getFecha()+". Duracion: "+reserva.getDuracion()
+					+". NºAdultos: "+reserva.getnAdultos()+".NºNiños: "+reserva.getnNiños()+". Especialidad: "+reserva.getEspecialidad()+". Descuento: "+reserva.getDescuentoAntigüedad()+"\n");	
 			
 			//Se cierra el fichero
 			fw.close();
@@ -261,29 +271,35 @@ public class IndividualReservaCreator extends ReservaCreator {
 		
 		//================COMENZAMOS PIDIENDO DATOS POR PANTALLA==================================
 		
-		//NOMBRE
-		System.out.println("\nPara la realización de la reserva, introduzca su nombre: ");
-		nombre= lector.nextLine();
-		reserva.setIdUsuario(nombre);
-		
-		//FECHA
-		/*
-		
-		System.out.println("\nIntroduzca la fecha y hora de la reserva en el siguiente formato: dd/mm/yyyy HH:mm:ss");
-		fechaAux= lector.nextLine();
+		//EMAIL
+		System.out.println("\nPara la realización de la reserva, introduzca su email: ");
+		email= lector.nextLine();
 		
 		try {
-			SimpleDateFormat formato = new SimpleDateFormat("dd//MM//yyyy HH:mm:ss");
-			Date fecha = formato.parse("12/07/2023 12:00:00");
-			reservaAdultos.setFecha(fecha);
-			System.out.println("Fecha: "+fecha);
-			
-		} catch (ParseException e) {
-			
-			e.printStackTrace();
+			aux = u.isUsuarioRegistrado(email);
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 		
-		*/
+		if(aux == true) {
+			reserva.setIdUsuario(email);
+		}else {
+			System.out.println("\n El usuario no está registrado en el sistema. Registrese antes de realizar una reserva.\n ");
+			System.out.println("Saliendo del gestor...");
+			System.exit(1);
+		}
+		
+		//FECHA
+		System.out.println("\nIntroduzca la fecha con el siguiente formato: [dd-MM-yyyy]");
+		fecha= lector.nextLine();
+		reserva.setFecha(fecha);
+		
+		//HORA
+		System.out.println("\nIntroduzca la hora con el siguiente formato: [hh:mm]24h");
+		hora= lector.nextLine();
+		reserva.setHora(hora);
+		
+		
 		//DURACION DE LA RESERVA
 		System.out.println("\nIntroduce la duracion de la reserva en minutos (60 // 90 // 120):");
 		duracion = lector.nextInt();
@@ -303,13 +319,13 @@ public class IndividualReservaCreator extends ReservaCreator {
 		pista= lector.nextLine();
 		
 		try {
-			disponible = p.pistaCumpleCondiciones(pista, "INFANTIL");
+			aux = p.pistaCumpleCondiciones(pista, "INFANTIL", fecha, hora);
 			
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
-		if(disponible == true) {
+		if(aux == true) {
 			System.out.println("\n La pista cumple con las condiciones.");
 			reserva.setPista(pista);
 		}else {
@@ -353,7 +369,7 @@ public class IndividualReservaCreator extends ReservaCreator {
 			FileWriter fw = new FileWriter(fichero, true);
 			
 			//Establecemos los datos que queremos volvar al fichero y además, se escriben en este
-			fw.write("Nombre: " + reserva.getIdUsuario() + ". Pista: "+reserva.getPista() +". Fecha: "+reserva.getFecha()+". Duracion: "+reserva.getDuracion()
+			fw.write("Email: " + reserva.getIdUsuario() + ". Pista: "+reserva.getPista() +". Fecha: "+reserva.getFecha()+". Duracion: "+reserva.getDuracion()
 					+". NºNiños: "+reserva.getnNiños()+". Especialidad: "+reserva.getEspecialidad()+". Descuento: "+reserva.getDescuentoAntigüedad());	
 			
 			//Se cierra el fichero

@@ -215,6 +215,8 @@ public class usuario {
 			if(controlador == true)	{
 				// ESCRIBIMOS EN EL FICHERO LOS DATOS QUE INTRODUCIMOS ANTERIORMENTE
 				fw.write("Email: " + getEmail() + ". Nombre: " + getNombre() + ". Fecha de nacimiento: " + getFechaNacimiento() + ". Fecha de inscripcion: " + getFechaInscripcion() + "\n");
+				
+
 			}
 			
 			// CERRAMOS EL FICHERO
@@ -229,38 +231,45 @@ public class usuario {
 	
 	public void darBajaUsuario(String email) throws IOException, FileNotFoundException
 	{
-		File f1 = new File("Usuarios.txt");
-		File temp = new File("UsuariosAuxiliar.txt");
-		
-		// CREAMOS EL WRITER Y EL READER PARA LOS FICHEROS
-		BufferedWriter writer = new BufferedWriter(new FileWriter(temp));
-		BufferedReader reader = new BufferedReader(new FileReader(f1));
-		
-		String lineactual;
-		
-		// CONTROLAMOS QUE NO SE SALGA DEL FICHERO
-		while((lineactual = reader.readLine()) != null)
-		{
-			// trim() -> Para eliminar los espacios al leer
-			String trimmedLine = lineactual.trim();
+		try {
 			
-			// COMPROBAMOS SI LA LINEA TIENE EL EMAIL INTRODUCIDO, SI NO LO TIENE SE INTRODUCE EN EL FICHERO DE ESCRITURA
-			if(!trimmedLine.contains(email))	{
-				writer.write(lineactual + "\n");
-			}
-			else {
-				System.out.print("\n¡Usuario eliminado con exito!\n");
+			File f1 = new File("Usuarios.txt");
+			File temp = new File("UsuariosAuxiliar.txt");
+			
+			// CREAMOS EL WRITER Y EL READER PARA LOS FICHEROS
+			BufferedWriter writer = new BufferedWriter(new FileWriter(temp));
+			BufferedReader reader = new BufferedReader(new FileReader(f1));
+			
+			String lineactual;
+			
+			// CONTROLAMOS QUE NO SE SALGA DEL FICHERO
+			while((lineactual = reader.readLine()) != null)
+			{
+				// trim() -> Para eliminar los espacios al leer
+				String trimmedLine = lineactual.trim();
 				
+				// COMPROBAMOS SI LA LINEA TIENE EL EMAIL INTRODUCIDO, SI NO LO TIENE SE INTRODUCE EN EL FICHERO DE ESCRITURA
+				if(!trimmedLine.contains(email))	{
+					writer.write(lineactual + "\n");
+				}
+				else {
+					System.out.print("\n¡Usuario eliminado con exito!\n");
+					
+				}
 			}
+			
+			// CIERRE DE LOS FICHEROS
+			writer.close();
+			reader.close();
+			
+			// BORRAMOS EL FICHERO ORIGINAL Y AL NUEVO LE CAMBIAMOS EL NOMBRE POR EL DEL ORIGINAL
+			f1.delete();
+			temp.renameTo(f1);
 		}
 		
-		// CIERRE DE LOS FICHEROS
-		writer.close();
-		reader.close();
-		
-		// BORRAMOS EL FICHERO ORIGINAL Y AL NUEVO LE CAMBIAMOS EL NOMBRE POR EL DEL ORIGINAL
-		f1.delete();
-		temp.renameTo(f1);
+		catch(IOException e) {
+			System.out.print("\nERROR AL ESCRIBIR EN EL FICHERO " + e.getMessage() + "\n");
+		}
 		
 	}
 	
@@ -300,67 +309,78 @@ public class usuario {
 		Scanner lector = new Scanner(System.in);
 		Boolean controlador = true;
 		
-		// ABRIMOS LOS FICHEROS DE ESCRITURA Y LECTURA
-		File f2 = new File("Usuarios.txt");
-		File temp2 = new File("UsuariosAuxiliar.txt");
-		BufferedReader reader = new BufferedReader(new FileReader(f2));
-
-		BufferedReader reader2 = new BufferedReader(new FileReader(f2));
-		BufferedWriter writer2 = new BufferedWriter(new FileWriter(temp2));
-		
-		String linea2;
-		
-		while((linea2 = reader2.readLine()) != null)
-		{
-			String trimmedLine = linea2.trim();
+		try {
 			
-			// VEMOS SI LA LINEA CONTIENE EL EMAIL INTRODUCIDO, SI NO LO CONTIENE SE INTRODUCE EN EL FICHERO DE ESCRITURA
-			if(!trimmedLine.contains(email))	{
-				writer2.write(linea2 + "\n");
-			}
+		
+			// ABRIMOS LOS FICHEROS DE ESCRITURA Y LECTURA
+			File f2 = new File("Usuarios.txt");
+			File temp2 = new File("UsuariosAuxiliar.txt");
+			BufferedReader reader = new BufferedReader(new FileReader(f2));
+	
+			BufferedReader reader2 = new BufferedReader(new FileReader(f2));
+			BufferedWriter writer2 = new BufferedWriter(new FileWriter(temp2));
 			
-			else {
-				System.out.print("Introduce nombre y apellidos del usuario: ");
-				String nombre = lector.nextLine();
-				setNombre(nombre);
+			String linea2;
+			
+			while((linea2 = reader2.readLine()) != null)
+			{
+				String trimmedLine = linea2.trim();
 				
-				System.out.print("Introduce la fecha de nacimiento del usuario (dd-MM-yyyy): ");
-				String fecha_nacimiento = lector.nextLine();
-				setFechaNacimiento(fecha_nacimiento);
-				
-				
-				System.out.print("Introduce el email del usuario: ");
-				email = lector.nextLine();
-				setEmail(email); 
-				
-				String lineactual;
-				
-				// REALIZAMOS EL CONTROL PARA QUE NO SALGA DEL FICHERO
-				while((lineactual = reader.readLine()) != null || controlador == false)	{
-					String trimmedLine2 = lineactual.trim();
-				
-					// COMPROBAMOS QUE LA LINEA TENGA EL EMAIL INTRODUCIDO, EN CASO CONTRARIO NO SE INTRODUCE EL FICHERO DE ESCRITURA
-					if(trimmedLine2.contains(email))	{
-						System.out.print("\nEl email que has introducido ya se encuentra registrado\n");
-						controlador = false;
-					}
+				// VEMOS SI LA LINEA CONTIENE EL EMAIL INTRODUCIDO, SI NO LO CONTIENE SE INTRODUCE EN EL FICHERO DE ESCRITURA
+				if(!trimmedLine.contains(email))	{
+					writer2.write(linea2 + "\n");
 				}
-			
-				if(controlador == true)	{
+				
+				else {
+					System.out.print("Introduce nombre y apellidos del usuario: ");
+					String nombre = lector.nextLine();
+					setNombre(nombre);
+					
+					System.out.print("Introduce la fecha de nacimiento del usuario (dd-MM-yyyy): ");
+					String fecha_nacimiento = lector.nextLine();
+					setFechaNacimiento(fecha_nacimiento);
+					
+					
+					/*System.out.print("Introduce el email del usuario: ");
+					email = lector.nextLine();
+					setEmail(email); */
+					
+					setFechaInscripcion();
+					
+					
+					// REALIZAMOS EL CONTROL PARA QUE NO SALGA DEL FICHERO
+				
+
 					// ESCRIBIMOS EN EL FICHERO LOS DATOS QUE INTRODUCIMOS ANTERIORMENTE
 					writer2.write("Email: " + getEmail() + ". Nombre: " + getNombre() + ". Fecha de nacimiento: " + getFechaNacimiento() + ". Fecha de inscripcion: " + getFechaInscripcion() + "\n");
+									
 				}
-								
 			}
+			
+			
+			reader.close();
+			writer2.close();
+			reader2.close();
+			
+			f2.delete();
+			temp2.renameTo(f2);
 		}
 		
+		catch(IOException e) {
+			System.out.print("\nERROR AL ESCRIBIR EN EL FICHERO " + e.getMessage() + "\n");
+		}
+	}
+	
+	public Boolean isUsuarioRegistrado(String email) throws FileNotFoundException, IOException {
+		ArrayList<String> usuariosRegistrados = Usuario.listarUsuarios();
 		
-		reader.close();
-		writer2.close();
-		reader2.close();
-		
-		f2.delete();
-		temp2.renameTo(f2);
+		for(String aux: usuariosRegistrados ) {
+			if(aux.contains(email)) {
+				System.out.println("El usuario esta registrado en el sistema. \n");
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

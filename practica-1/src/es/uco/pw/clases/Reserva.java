@@ -4,17 +4,23 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
-import java.util.Scanner;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.text.*;
+import java.util.*;
+import java.io.*;
 
 public class Reserva {
 	private String idUsuario;
-	private Date fecha;
+	private LocalDate fecha;
+	private String hora;
 	private int duracion;
 	private String pista;
 	private float precio;
 	private float descuentoAntigüedad;
 	private dificultad especialidad;
+	ArrayList<String> reservas = new ArrayList<String>();
 	
 	public Reserva() {
 		
@@ -36,15 +42,33 @@ public class Reserva {
 	/**
 	 * @return the fecha
 	 */
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 	/**
 	 * @param fecha the fecha to set
 	 */
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFecha(String fecha) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		LocalDate ld = LocalDate.parse(fecha, formatter);
+		this.fecha = ld;
+		
+		
 	}
+	/**
+	 * @return the hora
+	 */
+	public String getHora() {
+		return hora;
+	}
+	/**
+	 * @param hora the hora to set
+	 */
+	public void setHora(String hora) {
+		this.hora = hora;
+	}
+
+
 	/**
 	 * @return the duracion
 	 */
@@ -114,7 +138,7 @@ public class Reserva {
 
 
 	public String toString() {
-		String info = "\n--- INFORMACION INTRODUCIDA --- \n ID Usuario=" + idUsuario + ", Fecha=" + fecha + ", Duracion=" + duracion
+		String info = "\n--- INFORMACION INTRODUCIDA --- \n ID Usuario=" + idUsuario + ", Fecha=" + fecha +", Hora=" + hora + ", Duracion=" + duracion
 				+ ", Pista=" + pista + ", Especialidad=" + especialidad +", Precio=" + precio + ", Descuento por Antigüedad=" + descuentoAntigüedad + "\n\n";
 		return info;
 	}
@@ -188,12 +212,13 @@ public class Reserva {
 		
 		return precio;
 	}
-	/*
-	public void eliminarReserva() {
+	
+	//ELIMINAR RESERVA
+	public void eliminarReserva(String email, String fecha, String hora, String pista) {
 		try
 		{
-			File f1 = new File("Bonos.txt");
-			File temp = new File("BonosAuxiliar.txt");
+			File f1 = new File("Reservas.txt");
+			File temp = new File("ReservasAuxiliar.txt");
 			
 			// CREAMOS EL WRITER Y EL READER PARA LOS FICHEROS
 			FileWriter writer = new FileWriter(temp, true);
@@ -207,11 +232,15 @@ public class Reserva {
 				// trim() -> Para eliminar los espacios al leer
 				String trimmedLine = lineactual.trim();
 				
-				// COMPROBAMOS SI LA LINEA TIENE EL NOMBRE INTRODUCIDO, SI NO LO TIENE SE INTRODUCE EN EL FICHERO DE ESCRITURA
-				if(!trimmedLine.contains(nombre))
+				// COMPROBAMOS SI LA LINEA TIENE EL EMAIL INTRODUCIDO, SI NO LO TIENE SE INTRODUCE EN EL FICHERO DE ESCRITURA
+				if(!trimmedLine.contains(email) || !trimmedLine.contains(fecha) || !trimmedLine.contains(hora) || !trimmedLine.contains(pista))
 				{
 					writer.write(lineactual + "\n");
 				}
+				else if(trimmedLine.contains(email) || trimmedLine.contains(fecha) || trimmedLine.contains(hora) || trimmedLine.contains(pista) ) {
+					System.out.println("Reserva Eliminada Correctamente.\n");
+				}
+				
 			}
 			
 			// CIERRE DE LOS FICHEROS
@@ -228,7 +257,54 @@ public class Reserva {
 		}
 		
 	}
-	*/
+	
+	public void listarReservas() throws IOException {
+		String linea;
+
+		// ABRIMOS EL FICHERO DE LECTURA
+		FileReader fichero = new FileReader("Reservas.txt");
+		BufferedReader breader = new BufferedReader(fichero);
+
+		while((linea = breader.readLine()) != null)
+		{
+			String trimmedLine = linea.trim();
+			reservas.add(linea);
+		}
+		
+		System.out.print("\n");
+		breader.close();
+
+		for(String aux: reservas)
+		{
+			System.out.println(aux + "\n");
+		}
+		System.out.println("\n");
+	}
+	
+	public void listarReservasPistaDia(String pista, String fecha) throws IOException {
+		String linea;
+
+		// ABRIMOS EL FICHERO DE LECTURA
+		FileReader fichero = new FileReader("Reservas.txt");
+		BufferedReader breader = new BufferedReader(fichero);
+
+		while((linea = breader.readLine()) != null)
+		{
+			String trimmedLine = linea.trim();
+			reservas.add(linea);
+		}
+		
+		System.out.print("\n");
+		breader.close();
+
+		for(String aux: reservas)
+		{
+			if(aux.contains(pista) && aux.contains(fecha)) {
+				System.out.println(aux + "\n");
+			}
+		}
+		System.out.println("\n");
+	}
 	
 	
 }
