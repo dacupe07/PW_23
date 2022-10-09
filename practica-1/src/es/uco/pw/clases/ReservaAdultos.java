@@ -1,5 +1,6 @@
 package es.uco.pw.clases;
 
+
 public class ReservaAdultos extends Reserva{
 	public int nAdultos = 1;
 	

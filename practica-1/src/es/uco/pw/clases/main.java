@@ -92,14 +92,17 @@ public class main
 			//Sacar un bono de reservas de un determinado tipo y con posibilidad a 5 reservas.
 			System.out.println("13. Sacar Bono de reservas");
 			
+			//Se permite modificar la reserva con 24h de antelación.
+			System.out.println("14. Modificar Reserva. (NO IMPLEMENTADA)");
+			
 			//Se permite cancelar la reserva con 24h de antelación.
-			System.out.println("14. Cancelar Reserva.");
+			System.out.println("15. Cancelar Reserva. (NO IMPLEMENTADA)");
 			
 			//Se permite consultar el número de reservas existentes a partir de la fecha de consulta. 
-			System.out.println("15. Consultar reservas a partir de hoy.");
+			System.out.println("16. Consultar reservas a partir de hoy. (NO IMPLEMENTADA)");
 			
 			//Se permite consultar las reservas existentes para un día y una fecha determinada.
-			System.out.println("16. Consultar reservas de una pista y día concreto.");
+			System.out.println("17. Consultar reservas de una pista y día concreto. (NO IMPLEMENTADA)");
 			
 			
 			System.out.println("\n----------------------");
@@ -115,7 +118,6 @@ public class main
 				break;
 				
 			case 1:
-				u.setFechaInscripcion();
 				u.darAltaUsuario();
 				break;
 				
@@ -175,39 +177,35 @@ public class main
 				
 			case 11:
 				r.crearReservaIndividual();
+				System.out.print(r.toString());
+				
 				break;
 				
 			case 12:
 				r.crearReservaBono();
+				System.out.print(r.toString());
 				break;
 			
 			case 13:
 				b.sacarBono();
-				break;
+				System.out.print(b.toString());
 				
+				break;
+			
 			case 14:
-				System.out.println("Introduce el nombre y apellidos del usuario que realizó la reserva: ");
-				String nombre= entrada.nextLine();
-				System.out.println("Introduce la fecha de la reserva: (yyyy-mm-dd) ");
-				String fecha = entrada.nextLine();
-				System.out.println("Introduce la hora de la reserva: (hh:mm)24h ");
-				String hora = entrada.nextLine();
-				System.out.println("Introduce la pista de la reserva: ");
-				String pista = entrada.nextLine();
-				r.eliminarReserva(nombre, fecha, hora, pista);
+				
 				break;
 				
 			case 15:
-				r.listarReservas();
+				
 				break;
 				
 			case 16:
-				System.out.println("Introduce el nombre de la pista: ");
-				String nombrePista= entrada.nextLine();
-				System.out.println("Introduce la fecha que desea consultar: (yyyy-mm-dd) ");
-				String fechaReserva = entrada.nextLine();
 				
-				r.listarReservasPistaDia(nombrePista, fechaReserva);
+				break;
+				
+			case 17:
+				
 				break;
 			}
 		}

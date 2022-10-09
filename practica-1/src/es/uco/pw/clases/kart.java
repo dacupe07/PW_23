@@ -1,7 +1,6 @@
 package es.uco.pw.clases;
-import java.util.ArrayList;
+
 import java.util.Scanner;
-import java.util.StringTokenizer;
 import java.io.*;
 
 
@@ -184,3 +183,4 @@ public class kart
 	
 	
 }
+

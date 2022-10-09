@@ -401,24 +401,15 @@ public class pista
 
 	}
 	 */
-	public Boolean pistaCumpleCondiciones(String pista, String especialidad, String fecha, String hora) throws IOException, FileNotFoundException
+	public Boolean pistaCumpleCondiciones(String pista, String especialidad) throws IOException, FileNotFoundException
 	{
 		ArrayList<String> pistasDisponibles = Pista.pistasDisponibles();
 		
 		for(String aux: pistasDisponibles ) {
-			if(aux.contains(pista) && aux.contains(especialidad)) {
-				System.out.println();
-				if(aux.contains(fecha) && aux.contains(hora)) {
-					System.out.println("La pista no esta disponible a la hora y fecha requerida.");
-					return false;
-				}
-				else {
-					System.out.println("La pista introducida está disponible para el dia y la fecha seleccionada y, además, cumple las condiciones de especialidad de la pista.");
-					return true;
-				}
-				
+			if(aux.contains(pista) && aux.contains(especialidad) 	) {
+				System.out.println("La pista introducida está disponible y cumple las condiciones de especialidad.");
+				return true;
 			}
-			
 		}
 		
 		return false;

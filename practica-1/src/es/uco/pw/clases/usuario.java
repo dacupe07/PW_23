@@ -191,6 +191,8 @@ public class usuario {
 		email = lector.nextLine();
 		setEmail(email);
 		
+		setFechaInscripcion();
+		
 		try	{
 			// CREACION DEL FICHERO EN MODO ESCRITURA
 			File fichero = new File("Usuarios.txt");
@@ -359,18 +361,6 @@ public class usuario {
 		
 		f2.delete();
 		temp2.renameTo(f2);
-	}
-	
-	public Boolean isUsuarioRegistrado(String nombre) throws FileNotFoundException, IOException {
-		ArrayList<String> usuariosRegistrados = Usuario.listarUsuarios();
-		
-		for(String aux: usuariosRegistrados ) {
-			if(aux.contains(nombre)) {
-				System.out.println("El usuario esta registrado en el sistema. \n");
-				return true;
-			}
-		}
-		return false;
 	}
 	
 }
