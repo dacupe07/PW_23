@@ -256,6 +256,36 @@ public class entidadesDAO
     }
 
 
+    public boolean existePista(String nombre)
+    {
+        boolean pistaExist = false;
+        try
+        {
+            DBConnection cn = new DBConnection();
+            String query = "SELECT * FROM pista WHERE nombre = '" + nombre + "'";
+
+            Statement st = cn.conex.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+
+            if(rs.next())
+            {
+                pistaExist = true;
+            }
+            else
+            {
+                pistaExist = false;
+            }
+            cn.conex.close();
+            st.close();
+        }
+        catch(Exception e)
+        {
+            System.err.println("Error: " + e);
+        }
+        return pistaExist;
+    }
+
     // FUNCIONES CLASE KART
 
     public void crearKart(int id_kart, String tipo, estado Estado)
@@ -310,4 +340,116 @@ public class entidadesDAO
         }
         return lista_karts;
     }
+
+    public void listaKartPista(int id_kart, String nombre_pista)
+    {
+        DBConnection cn = new DBConnection();
+
+        try
+        {
+            String query_pista = "SELECT dificultad FROM pista WHERE nombre = '" + nombre_pista + "'";
+            String query_kart = "SELECT tipo FROM kart WHERE id_kart = " + id_kart + "";
+            String query_pista_kart = "INSERT INTO kart_pista (id_kart, nombre_pista, dificultad_pista, tipo_kart) VALUES (?, ?, ?, ?)";
+            dificultad Dificultad;
+            String tipo_kart;
+
+            Statement st = cn.conex.createStatement();
+            System.out.print("A");
+            ResultSet rs_pista = st.executeQuery(query_pista);
+
+            while(rs_pista.next())
+            {
+                System.out.print("B");
+                Dificultad = dificultad.valueOf(rs_pista.getString("dificultad"));
+                entidades.setDificultad(Dificultad);
+            }
+
+            st.close();
+
+            Statement st1 = cn.conex.createStatement();
+            ResultSet rs_kart = st1.executeQuery(query_kart);
+
+            while(rs_kart.next())
+            {
+                System.out.print("C");
+                tipo_kart = rs_kart.getString("tipo");
+                entidades.setTipo(tipo_kart);
+            }
+
+            st1.close();
+
+            PreparedStatement ps = cn.conex.prepareStatement(query_pista_kart);
+            System.out.print("D");
+            if(entidades.getDificultad() == dificultad.valueOf("infantil") && entidades.getTipo() == "niños")
+            {
+                System.out.print("E");
+                ps.setInt(1, id_kart);
+                ps.setString(2, nombre_pista);
+                ps.setString(3, String.valueOf(entidades.getDificultad()));
+                ps.setString(4, entidades.getTipo());
+
+                status = ps.executeUpdate();
+            }
+
+            if(entidades.getDificultad() == dificultad.valueOf("adulto") && entidades.getTipo() == "adultos")
+            {
+                System.out.print("F");
+                ps.setInt(1, id_kart);
+                ps.setString(2, nombre_pista);
+                ps.setString(3, String.valueOf(entidades.getDificultad()));
+                ps.setString(4, entidades.getTipo());
+
+                status = ps.executeUpdate();
+            }
+
+            if(entidades.getDificultad() == dificultad.valueOf("familiar") && (entidades.getTipo() == "adultos" || entidades.getTipo() == "niños"))
+            {
+                System.out.print("g");
+                ps.setInt(1, id_kart);
+                ps.setString(2, nombre_pista);
+                ps.setString(3, String.valueOf(entidades.getDificultad()));
+                ps.setString(4, entidades.getTipo());
+
+                status = ps.executeUpdate();
+            }
+
+            cn.conex.close();
+        }
+        catch (Exception e)
+        {
+            System.err.println(e);
+
+        }
+    }
+
+    public boolean existeKart(int id_kart)
+    {
+        boolean kartExist = false;
+        try
+        {
+            DBConnection cn = new DBConnection();
+            String query = "SELECT * FROM kart WHERE id_kart = '" + id_kart + "'";
+
+            Statement st = cn.conex.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+
+            if(rs.next())
+            {
+                kartExist = true;
+            }
+            else
+            {
+                kartExist = false;
+            }
+            cn.conex.close();
+            st.close();
+        }
+        catch(Exception e)
+        {
+            System.err.println("Error: " + e);
+        }
+        return kartExist;
+    }
+
 }

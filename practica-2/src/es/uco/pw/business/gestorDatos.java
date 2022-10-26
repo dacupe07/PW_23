@@ -32,6 +32,8 @@ public class gestorDatos
     entidadesDAO crearKart = new entidadesDAO();
     entidadesDAO listarKartsDisponibles = new entidadesDAO();
 
+    entidadesDAO asociarKartPista = new entidadesDAO();
+
     public String listarUsuariosBBDD()
     {
         String usuario = "";
@@ -231,5 +233,36 @@ public class gestorDatos
         }
 
         return kart;
+    }
+
+    public void asociarKartPistaBBDD()
+    {
+        Scanner sc = new Scanner(System.in);
+        int id_kart;
+        String nombre_pista;
+
+        System.out.print("Introduce el ID del Kart que desea seleccionar: ");
+        id_kart = sc.nextInt();
+        sc.nextLine();
+
+        if(asociarKartPista.existeKart(id_kart) == true)
+        {
+            System.out.print("Introduce el nombre de la pista a la que se le desea asociar: ");
+            nombre_pista = sc.nextLine();
+
+            if(asociarKartPista.existePista(nombre_pista) == true)
+            {
+                asociarKartPista.listaKartPista(id_kart, nombre_pista);
+            }
+            else
+            {
+                System.out.print("La pista introducida en la BBDD no existe");
+            }
+        }
+        else
+        {
+            System.out.print("El kart introducido no existe en la BBDD");
+        }
+
     }
 }

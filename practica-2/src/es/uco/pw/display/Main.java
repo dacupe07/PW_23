@@ -95,6 +95,7 @@ public class Main
                     break;
 
                 case 9:
+                    Gestor.asociarKartPistaBBDD();
                     break;
 
                 case 10:

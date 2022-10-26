@@ -182,14 +182,14 @@ public class entidadesDTO
         this.est_pista = est_pista;
     }
 
-    public estado getEstado()
+    public dificultad getDificultad()
     {
-        return this.Estado;
+        return this.Dificultad;
     }
 
-    public void setEstado(estado Estado)
+    public void setDificultad(dificultad Dificultad)
     {
-        this.Estado = Estado;
+        this.Dificultad = Dificultad;
     }
 
     public int getNumMax()
