@@ -2,9 +2,9 @@ package es.uco.pw.business;
 
 public enum estado
 {
-    DISPONIBLE,
-    RESERVADO,
-    MANTENIMIENTO;
+    disponible,
+    reservado,
+    mantenimiento;
 
     private estado()
     {

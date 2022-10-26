@@ -2,9 +2,9 @@ package es.uco.pw.business;
 
 public enum dificultad
 {
-    INFANTIL,
-    FAMILIAR,
-    ADULTOS;
+    infantil,
+    familiar,
+    adultos;
 
     private dificultad()
     {

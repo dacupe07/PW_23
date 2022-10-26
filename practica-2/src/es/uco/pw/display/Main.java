@@ -71,7 +71,36 @@ public class Main
                     break;
 
                 case 4:
+                    Gestor.actualizarUsuarioBBDD();
+                    break;
 
+                case 5:
+                    Gestor.crearPistaBBDD();
+                    break;
+
+                case 6:
+                    String lista_pistas_mant = Gestor.listarPistasMantenimientoBBDD();
+                    System.out.println("\n --- PISTAS EN MANTENIMIENTO ---");
+                    System.out.println(lista_pistas_mant);
+                    break;
+
+                case 7:
+                    String lista_pistas_disp = Gestor.listarPistasDisponiblesBBDD();
+                    System.out.println("\n --- PISTAS DISPONIBLES ---");
+                    System.out.println(lista_pistas_disp);
+                    break;
+
+                case 8:
+                    Gestor.crearKartBBDD();
+                    break;
+
+                case 9:
+                    break;
+
+                case 10:
+                    String lista_karts_disp = Gestor.listarKartsDisponiblesBBDD();
+                    System.out.println("\n --- KARTS DISPONIBLES ---");
+                    System.out.println(lista_karts_disp);
                     break;
             }
         }

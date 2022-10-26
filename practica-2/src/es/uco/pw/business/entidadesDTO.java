@@ -18,7 +18,7 @@ public class entidadesDTO
      */
 
     protected int id_kart;
-    protected boolean tipo;
+    protected String tipo;
     protected estado Estado;
 
     /*
@@ -26,7 +26,7 @@ public class entidadesDTO
      */
 
     protected String nom_pista;
-    protected boolean est_pista;
+    protected String est_pista;
     protected dificultad Dificultad;
     protected int num_max;
 
@@ -66,7 +66,7 @@ public class entidadesDTO
 
     // CONSTRUCTOR CLASE KART
 
-    public entidadesDTO(int id_kart, boolean tipo, estado Estado)
+    public entidadesDTO(int id_kart, String tipo, estado Estado)
     {
         this.id_kart = id_kart;
         this.tipo = tipo;
@@ -75,7 +75,7 @@ public class entidadesDTO
 
     // CONSTRUCTOR CLASE PISTA
 
-    public entidadesDTO(String nom_pista, boolean est_pista, dificultad Dificultad, int num_max)
+    public entidadesDTO(String nom_pista, String est_pista, dificultad Dificultad, int num_max)
     {
         this.nom_pista = nom_pista;
         this.est_pista = est_pista;
@@ -172,12 +172,12 @@ public class entidadesDTO
         this.nom_pista = nom_pista;
     }
 
-    public boolean getEstPista()
+    public String getEstPista()
     {
         return this.est_pista;
     }
 
-    public void setEstPista(boolean est_pista)
+    public void setEstPista(String est_pista)
     {
         this.est_pista = est_pista;
     }
@@ -214,12 +214,12 @@ public class entidadesDTO
         this.id_kart = id_kart;
     }
 
-    public boolean getTipo()
+    public String getTipo()
     {
         return this.tipo;
     }
 
-    public void setTipo(boolean tipo)
+    public void setTipo(String tipo)
     {
         this.tipo = tipo;
     }
@@ -388,7 +388,7 @@ public class entidadesDTO
 
     public String toStringPista()
     {
-        String info = "\nNombre: " + this.nombre + ". Estado: " + this.est_pista + ". Dificultad: " + this.Dificultad + ". Numero maximo: " + this.num_max;
+        String info = "\nNombre: " + this.nom_pista + ". Estado: " + this.est_pista + ". Dificultad: " + this.Dificultad + ". Numero maximo: " + this.num_max;
         return info;
     }
 
