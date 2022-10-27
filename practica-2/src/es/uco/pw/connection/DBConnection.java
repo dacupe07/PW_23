@@ -1,7 +1,5 @@
 package es.uco.pw.connection;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,37 +10,43 @@ import java.util.Properties;
 
 public class DBConnection
 {
-    public Connection conex;
-    Properties config_propiedades = new Properties();
-    InputStream config = null;
+		
+	protected Connection connection = null;
+		/**
+		 * Funcion que obtiene la conexion con la base de datos
+		 * @param prop Fichero de propiedades
+		 * @return Conexion con la base de datos
+		 */
 
+		public static Connection getConnection(Properties prop) {
+			Connection con=null;
+			try 
+			{
+				// Obtenemos el driver de mysql
+				
+				Class.forName(prop.getProperty("driver"));
+			  
+				// Obtenemos los datos de conexion con la base de datos
+			  
+				con= DriverManager.getConnection(prop.getProperty("url"),prop.getProperty("usuario"),prop.getProperty("contrasena"));
+			  
+			} catch(Exception e) {
+				System.out.println("Los datos de conexion con la base de datos no son correctos o no se esta utilizando una direccion IP de la UCO");
+			}
+			
+			return con;
+		}
 
-   public DBConnection()
-    {
-        try
+    public void closeConnection(Connection con) throws SQLException {
+        if(con != null)
         {
-            config = new FileInputStream("config.properties");
-            config_propiedades.load(config);
-
-            Class.forName(config_propiedades.getProperty("driver"));
-            conex = DriverManager.getConnection("jdbc:mysql://" + config_propiedades.getProperty("nombre_servidor") + ":" + config_propiedades.getProperty("puerto") + "/i72cuped", config_propiedades.getProperty("usuario_bd"), config_propiedades.getProperty("password_bd"));
-            System.out.println("La conexion a la base de datos se ha establecido con exito!");
-        }
-        catch(Exception e)
-        {
-            System.err.println("ERROR: " + e);
-        }
-    }
-
-    public void closeConnection() throws SQLException {
-        if(conex != null)
-        {
-            if(!conex.isClosed())
+            if(!con.isClosed())
             {
-                conex.close();
+                con.close();
             }
         }
     }
 }
+
 
 
