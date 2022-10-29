@@ -28,8 +28,9 @@ public class DBConnection
 			  
 				// Obtenemos los datos de conexion con la base de datos
 			  
-				con= DriverManager.getConnection(prop.getProperty("url"),prop.getProperty("usuario"),prop.getProperty("contrasena"));
-			  
+				con = DriverManager.getConnection("jdbc:mysql://" + prop.getProperty("nombre_servidor") + ":" + prop.getProperty("puerto") + "/i72cuped", prop.getProperty("usuario_bd"), prop.getProperty("password_bd"));
+	            		System.out.println("La conexion a la base de datos se ha establecido con exito!");
+				
 			} catch(Exception e) {
 				System.out.println("Los datos de conexion con la base de datos no son correctos o no se esta utilizando una direccion IP de la UCO");
 			}
