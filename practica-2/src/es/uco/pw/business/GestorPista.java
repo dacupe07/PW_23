@@ -90,7 +90,7 @@ public class GestorPista {
 
             if(asociarKartPista.existePista(nombre_pista,config,sql) == true)
             {
-                asociarKartPista.asociarKartPista(id_kart, nombre_pista,config,sql);
+            	asociarKartPista.AsociarKartPista(id_kart, nombre_pista, config, sql);
             }
             else
             {
