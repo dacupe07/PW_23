@@ -18,23 +18,37 @@ public class Main
         GestorPista Gestorpista = new GestorPista();
         Scanner entrada = new Scanner(System.in);
         int opcion;
-        File miDir = new File (".");
         
-        String rutaabsoluta;
-		try {
-			rutaabsoluta = miDir.getCanonicalPath(); //se supone que da la ruta actual
-			String rutaFicheroConfiguracion = rutaabsoluta + "/config.properties";
-	    	String rutaFicheroSQL = rutaabsoluta + "/sql.properties";
-	    	
-	    	Properties config = new Properties();
-			Properties sql = new Properties();
-	    	
-			InputStream is = new FileInputStream(rutaFicheroConfiguracion);
-			config.load(is);
-
-			is = new FileInputStream(rutaFicheroSQL);
-			sql.load(is);
+        	Properties config = new Properties();
+			InputStream is;
+			try {
+				
+				is = new FileInputStream("config.properties");
+				try {
+					config.load(is);
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 			
+			Properties sql = new Properties();
+			InputStream is1;
+			try {
+				
+				is1 = new FileInputStream("sql.properties");
+				try {
+					sql.load(is1);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
     	
         boolean controlador = true;
 
@@ -127,11 +141,6 @@ public class Main
                     break;
             }
         }
-        
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 
     }
 }
