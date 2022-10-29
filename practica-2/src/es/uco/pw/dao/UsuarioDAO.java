@@ -13,6 +13,8 @@ import es.uco.pw.connection.DBConnection;
 
 public class UsuarioDAO {
 	
+	public UsuarioDAO() {}
+	
 	public boolean existeUsuario(String correo,Properties config,Properties sql)
     {
         boolean userExist = false;
@@ -107,13 +109,14 @@ public class UsuarioDAO {
 		return status;
     }
 
-    public int eliminarUsuario(UsuarioDTO usuarioDTO, Properties config, Properties sql) throws SQLException
+    public int eliminarUsuario(String correo, Properties config, Properties sql) throws SQLException
     {
     	int status=0;
         try
         {
         	Connection cn = DBConnection.getConnection(config);
             PreparedStatement ps=cn.prepareStatement(sql.getProperty("borrarUsuario"));
+            ps.setString(1, correo);
             status = ps.executeUpdate();
             cn.close();
             ps.close();
