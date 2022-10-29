@@ -1,19 +1,41 @@
 package es.uco.pw.display;
 
-import es.uco.pw.business.gestorDatos;
+import es.uco.pw.business.GestorUsuario;
+import es.uco.pw.business.GestorPista;
+import es.uco.pw.business.GestorKart;
 
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Scanner;
+import java.io.*;
+import java.util.Properties;
 
 public class Main
 {
     public static void main(String[] args) throws SQLException, ParseException {
-        gestorDatos Gestor = new gestorDatos();
+        GestorUsuario Gestorusuario = new GestorUsuario();
+        GestorKart Gestorkart = new GestorKart();
+        GestorPista Gestorpista = new GestorPista();
         Scanner entrada = new Scanner(System.in);
         int opcion;
+        File miDir = new File (".");
+        
+        String rutaabsoluta;
+		try {
+			rutaabsoluta = miDir.getCanonicalPath(); //se supone que da la ruta actual
+			String rutaFicheroConfiguracion = rutaabsoluta + "/config.properties";
+	    	String rutaFicheroSQL = rutaabsoluta + "/sql.properties";
+	    	
+	    	Properties config = new Properties();
+			Properties sql = new Properties();
+	    	
+			InputStream is = new FileInputStream(rutaFicheroConfiguracion);
+			config.load(is);
 
-
+			is = new FileInputStream(rutaFicheroSQL);
+			sql.load(is);
+			
+    	
         boolean controlador = true;
 
         while(controlador == true)
@@ -57,55 +79,58 @@ public class Main
                     break;
 
                 case 1:
-                    Gestor.crearUsuarioBBDD();
+                    Gestorusuario.crearUsuarioBBDD(config,sql);
                     break;
 
                 case 2:
-                    Gestor.borrarUsuarioBBDD();
+                    Gestorusuario.borrarUsuarioBBDD(config,sql);
                     break;
 
                 case 3:
-                    String lista_usuarios = Gestor.listarUsuariosBBDD();
+                    String lista_usuarios = Gestorusuario.listarUsuariosBBDD(config,sql);
                     System.out.println("\n--- USUARIOS REGISTRADOS ---");
                     System.out.println(lista_usuarios);
                     break;
 
                 case 4:
-                    Gestor.actualizarUsuarioBBDD();
+                    Gestorusuario.actualizarUsuarioBBDD(config,sql);
                     break;
 
                 case 5:
-                    Gestor.crearPistaBBDD();
+                    Gestorpista.crearPistaBBDD(config,sql);
                     break;
 
                 case 6:
-                    String lista_pistas_mant = Gestor.listarPistasMantenimientoBBDD();
+                    String lista_pistas_mant = Gestorpista.listarPistasMantenimientoBBDD(config,sql);
                     System.out.println("\n --- PISTAS EN MANTENIMIENTO ---");
                     System.out.println(lista_pistas_mant);
                     break;
 
                 case 7:
-                    String lista_pistas_disp = Gestor.listarPistasDisponiblesBBDD();
+                    String lista_pistas_disp = Gestorpista.listarPistasDisponiblesBBDD(config,sql);
                     System.out.println("\n --- PISTAS DISPONIBLES ---");
                     System.out.println(lista_pistas_disp);
                     break;
 
                 case 8:
-                    Gestor.crearKartBBDD();
+                    Gestorkart.crearKartBBDD(config,sql);
                     break;
 
                 case 9:
-                    Gestor.asociarKartPistaBBDD();
+                    Gestorpista.asociarKartPistaBBDD(config,sql);
                     break;
 
                 case 10:
-                    String lista_karts_disp = Gestor.listarKartsDisponiblesBBDD();
+                    String lista_karts_disp = Gestorkart.listarKartsDisponiblesBBDD(config,sql);
                     System.out.println("\n --- KARTS DISPONIBLES ---");
                     System.out.println(lista_karts_disp);
                     break;
             }
         }
-
+        
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 
     }
