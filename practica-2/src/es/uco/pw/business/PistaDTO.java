@@ -1,5 +1,6 @@
 package es.uco.pw.business;
 
+
 public class PistaDTO {
 	
 	protected String nom_pista;
@@ -56,5 +57,11 @@ public class PistaDTO {
     public void setNumMax(int num_max)
     {
         this.num_max = num_max;
+    }
+    
+    public String toStringPista()
+    {
+        String info = "\nNombre: " + this.nom_pista + ". Estado: " + this.est_pista + ". Dificultad: " + this.Dificultad + ". Numero maximo: " + this.num_max;
+        return info;
     }
 }

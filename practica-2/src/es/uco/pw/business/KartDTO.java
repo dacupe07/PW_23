@@ -46,4 +46,10 @@ public class KartDTO {
     {
         this.Estado = Estado;
     }
+    
+    public String toStringKart()
+    {
+        String info = "\nID: " + this.id_kart + ". Tipo: " + this.tipo + ". Estado: " + this.Estado;
+        return info;
+    }
 }

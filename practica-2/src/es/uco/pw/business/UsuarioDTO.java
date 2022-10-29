@@ -61,4 +61,10 @@ public class UsuarioDTO {
 		    {
 		        this.fecha_inscripcion = fecha_inscripcioh;
 		    }
+		    
+		    public String toString() {
+				String info = "\nNombre y apellidos: " + this.nombre + "\nFecha de nacimiento: " + this.fecha_nacimiento + "\nFecha de inscripcion: " + this.fecha_inscripcion + "\nEmail: " + this.correo + "\n\n";
+				
+				return info;
+			}
 }
