@@ -1,55 +1,19 @@
 package es.uco.pw.display;
 
-import es.uco.pw.business.GestorUsuario;
-import es.uco.pw.business.GestorPista;
-import es.uco.pw.business.GestorKart;
+import es.uco.pw.business.gestorDatos;
 
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Scanner;
-import java.io.*;
-import java.util.Properties;
 
 public class Main
 {
     public static void main(String[] args) throws SQLException, ParseException {
-        GestorUsuario Gestorusuario = new GestorUsuario();
-        GestorKart Gestorkart = new GestorKart();
-        GestorPista Gestorpista = new GestorPista();
+        gestorDatos Gestor = new gestorDatos();
         Scanner entrada = new Scanner(System.in);
         int opcion;
-        
-        	Properties config = new Properties();
-			InputStream is;
-			try {
-				
-				is = new FileInputStream("config.properties");
-				try {
-					config.load(is);
-				} catch (IOException e) {
-					
-					e.printStackTrace();
-				}
-				
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			
-			Properties sql = new Properties();
-			InputStream is1;
-			try {
-				
-				is1 = new FileInputStream("sql.properties");
-				try {
-					sql.load(is1);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-    	
+
+
         boolean controlador = true;
 
         while(controlador == true)
@@ -77,8 +41,9 @@ public class Main
             System.out.println("12. Realizar Reserva con bono");
             System.out.println("13. Sacar Bono de reservas");
             System.out.println("14. Cancelar Reserva.");
-            System.out.println("15. Consultar reservas a partir de hoy.");
-            System.out.println("16. Consultar reservas de una pista y día concreto.");
+            System.out.println("15. Modificar Reserva.");
+            System.out.println("16. Consultar reservas a partir de hoy.");
+            System.out.println("17. Consultar reservas de una pista y día concreto.");
             System.out.println("\n----------------------");
             System.out.print("\nIntroduzca la opcion deseada: ");
             opcion = entrada.nextInt();
@@ -93,54 +58,87 @@ public class Main
                     break;
 
                 case 1:
-                    Gestorusuario.crearUsuarioBBDD(config,sql);
+                    Gestor.crearUsuarioBBDD();
                     break;
 
                 case 2:
-                    Gestorusuario.borrarUsuarioBBDD(config,sql);
+                    Gestor.borrarUsuarioBBDD();
                     break;
 
                 case 3:
-                    String lista_usuarios = Gestorusuario.listarUsuariosBBDD(config,sql);
+                    String lista_usuarios = Gestor.listarUsuariosBBDD();
                     System.out.println("\n--- USUARIOS REGISTRADOS ---");
                     System.out.println(lista_usuarios);
                     break;
 
                 case 4:
-                    Gestorusuario.actualizarUsuarioBBDD(config,sql);
+                    Gestor.actualizarUsuarioBBDD();
                     break;
 
                 case 5:
-                    Gestorpista.crearPistaBBDD(config,sql);
+                    Gestor.crearPistaBBDD();
                     break;
 
                 case 6:
-                    String lista_pistas_mant = Gestorpista.listarPistasMantenimientoBBDD(config,sql);
+                    String lista_pistas_mant = Gestor.listarPistasMantenimientoBBDD();
                     System.out.println("\n --- PISTAS EN MANTENIMIENTO ---");
                     System.out.println(lista_pistas_mant);
                     break;
 
                 case 7:
-                    String lista_pistas_disp = Gestorpista.listarPistasDisponiblesBBDD(config,sql);
+                    String lista_pistas_disp = Gestor.listarPistasDisponiblesBBDD();
                     System.out.println("\n --- PISTAS DISPONIBLES ---");
                     System.out.println(lista_pistas_disp);
                     break;
 
                 case 8:
-                    Gestorkart.crearKartBBDD(config,sql);
+                    Gestor.crearKartBBDD();
                     break;
 
                 case 9:
-                    Gestorpista.asociarKartPistaBBDD(config,sql);
+                    Gestor.asociarKartPistaBBDD();
                     break;
 
                 case 10:
-                    String lista_karts_disp = Gestorkart.listarKartsDisponiblesBBDD(config,sql);
+                    String lista_karts_disp = Gestor.listarKartsDisponiblesBBDD();
                     System.out.println("\n --- KARTS DISPONIBLES ---");
                     System.out.println(lista_karts_disp);
                     break;
+
+                case 11:
+                    Gestor.reservaIndividualBBDD();
+                    break;
+
+                case 12:
+                    break;
+
+                case 13:
+                    break;
+
+                case 14:
+                    Gestor.cancelarReservaBBDD();
+                    break;
+
+                case 15:
+                    Gestor.actualizarReservaBBDD();
+                    break;
+
+                case 16:
+                    String lista_reservas_futu = Gestor.listarReservasFuturasBBDD();
+                    System.out.println("\n --- RESERVAS REALIZADAS ---");
+                    System.out.println(lista_reservas_futu);
+                    break;
+
+                case 17:
+                    String lista_reservas_act = Gestor.listarReservasBBDD();
+                    System.out.println("\n --- RESERVAS REALIZADAS ---");
+                    System.out.println(lista_reservas_act);
+                    break;
+
             }
         }
+
+
 
     }
 }

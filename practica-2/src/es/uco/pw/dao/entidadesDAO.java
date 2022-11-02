@@ -5,12 +5,11 @@ import es.uco.pw.business.entidadesDTO;
 import es.uco.pw.business.estado;
 import es.uco.pw.connection.DBConnection;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class entidadesDAO
 {
@@ -27,7 +26,7 @@ public class entidadesDAO
         try
         {
             DBConnection cn = new DBConnection();
-            String query = "SELECT * FROM usuario WHERE correo = '" + correo + "'";
+            String query = "SELECT nombre FROM usuario WHERE correo = '" + correo + "'";
 
             Statement st = cn.conex.createStatement();
             ResultSet rs = st.executeQuery(query);
@@ -69,8 +68,8 @@ public class entidadesDAO
             {
                 String correo = rs.getString("correo");
                 String nombre = rs.getString("nombre");
-                Date fecha_nacimiento = rs.getDate("fecha_nacimiento");
-                Date fecha_inscripcion = rs.getDate("fecha_inscripcion");
+                LocalDate fecha_nacimiento = rs.getDate("fecha_nacimiento").toLocalDate();
+                LocalDate fecha_inscripcion = rs.getDate("fecha_inscripcion").toLocalDate();
                 lista_usuarios.add(new entidadesDTO(correo, nombre, fecha_nacimiento, fecha_inscripcion));
             }
 
@@ -85,15 +84,15 @@ public class entidadesDAO
         return lista_usuarios;
     }
 
-    public void registrarUsuario(String correo, String nombre, Date fecha_nacimiento, Date fecha_inscripcion) throws SQLException
+    public void registrarUsuario(String correo, String nombre, LocalDate fecha_nacimiento, LocalDate fecha_inscripcion) throws SQLException
     {
         try
         {
             DBConnection cn = new DBConnection();
             String query = "INSERT INTO usuario (correo, nombre, fecha_nacimiento, fecha_inscripcion) VALUES(?,?,?,?)";
             PreparedStatement ps = cn.conex.prepareStatement(query);
-            java.sql.Date fecha_nacimiento_sql = new java.sql.Date(fecha_nacimiento.getYear(), fecha_nacimiento.getMonth(), fecha_nacimiento.getDay());
-            java.sql.Date fecha_inscripcion_sql = new java.sql.Date(fecha_inscripcion.getYear(), fecha_inscripcion.getMonth(), fecha_inscripcion.getDay());
+            java.sql.Date fecha_nacimiento_sql = java.sql.Date.valueOf(fecha_nacimiento);
+            java.sql.Date fecha_inscripcion_sql = java.sql.Date.valueOf(fecha_inscripcion);
 
             if (existeUsuario(correo) == false)
             {
@@ -135,7 +134,7 @@ public class entidadesDAO
         }
     }
 
-    public void actualizarUsuario(String correo, String nombre, Date fecha_nacimiento, Date fecha_inscripcion, String correo_aux)
+    public void actualizarUsuario(String correo, String nombre, LocalDate fecha_nacimiento, LocalDate fecha_inscripcion, String correo_aux)
     {
         DBConnection cn = new DBConnection();
 
@@ -144,8 +143,8 @@ public class entidadesDAO
             //String query = "UPDATE usuario SET correo = '" + correo + "', nombre = '" + nombre + "', fecha_nacimiento = '" + fecha_nacimiento + "', fecha_inscripcion = '" + fecha_inscripcion + "'";
             String query = "UPDATE usuario SET correo = ?, nombre = ?, fecha_nacimiento = ?, fecha_inscripcion = ? WHERE correo = '" + correo_aux + "'";
             PreparedStatement ps = cn.conex.prepareStatement(query);
-            java.sql.Date fecha_nacimiento_sql = new java.sql.Date(fecha_nacimiento.getYear(), fecha_nacimiento.getMonth(), fecha_nacimiento.getDay());
-            java.sql.Date fecha_inscripcion_sql = new java.sql.Date(fecha_inscripcion.getYear(), fecha_inscripcion.getMonth(), fecha_inscripcion.getDay());
+            java.sql.Date fecha_nacimiento_sql = Date.valueOf(fecha_nacimiento);
+            java.sql.Date fecha_inscripcion_sql = Date.valueOf(fecha_inscripcion);
 
             ps.setString(1,  correo);
             ps.setString(2, nombre);
@@ -160,6 +159,36 @@ public class entidadesDAO
         {
             System.out.println("ERROR: " + e);
         }
+    }
+
+    public LocalDate obtenerFecha(String correo) throws SQLException
+    {
+        DBConnection cn = new DBConnection();
+
+        String query = "SELECT fecha_inscripcion FROM usuario WHERE correo = '" + correo + "'";
+        Statement st = cn.conex.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        LocalDate fecha;
+
+        entidades = new entidadesDTO();
+        try
+        {
+            if (rs.next())
+            {
+                fecha = rs.getDate("fecha_inscripcion").toLocalDate();
+                entidades.setFechaInscripcion(fecha);
+            }
+            st.close();
+            cn.conex.close();
+        }
+        catch (Exception e)
+        {
+            System.err.print("ERROR: " + e);
+        }
+
+        fecha = entidades.getFechaInscripcion();
+
+        return fecha;
     }
 
 
@@ -352,14 +381,16 @@ public class entidadesDAO
             String query_pista_kart = "INSERT INTO kart_pista (id_kart, nombre_pista, dificultad_pista, tipo_kart) VALUES (?, ?, ?, ?)";
             dificultad Dificultad;
             String tipo_kart;
+            String dif;
+            String tipo;
 
             Statement st = cn.conex.createStatement();
-            System.out.print("A");
             ResultSet rs_pista = st.executeQuery(query_pista);
+
+            entidades = new entidadesDTO();
 
             while(rs_pista.next())
             {
-                System.out.print("B");
                 Dificultad = dificultad.valueOf(rs_pista.getString("dificultad"));
                 entidades.setDificultad(Dificultad);
             }
@@ -379,8 +410,10 @@ public class entidadesDAO
             st1.close();
 
             PreparedStatement ps = cn.conex.prepareStatement(query_pista_kart);
-            System.out.print("D");
-            if(entidades.getDificultad() == dificultad.valueOf("infantil") && entidades.getTipo() == "niños")
+            dif = String.valueOf(entidades.getDificultad());
+            tipo = entidades.getTipo();
+
+            if(dif.equals("infantil") && tipo.equals("Niño"))
             {
                 System.out.print("E");
                 ps.setInt(1, id_kart);
@@ -391,7 +424,7 @@ public class entidadesDAO
                 status = ps.executeUpdate();
             }
 
-            if(entidades.getDificultad() == dificultad.valueOf("adulto") && entidades.getTipo() == "adultos")
+            if(dif.equals("adultos") && tipo.equals("Adulto"))
             {
                 System.out.print("F");
                 ps.setInt(1, id_kart);
@@ -402,7 +435,18 @@ public class entidadesDAO
                 status = ps.executeUpdate();
             }
 
-            if(entidades.getDificultad() == dificultad.valueOf("familiar") && (entidades.getTipo() == "adultos" || entidades.getTipo() == "niños"))
+            if(dif.equals("familiar") && tipo.equals("Niño"))
+            {
+                System.out.print("g");
+                ps.setInt(1, id_kart);
+                ps.setString(2, nombre_pista);
+                ps.setString(3, String.valueOf(entidades.getDificultad()));
+                ps.setString(4, entidades.getTipo());
+
+                status = ps.executeUpdate();
+            }
+
+            if(dif.equals("familiar") && tipo.equals("Adulto"))
             {
                 System.out.print("g");
                 ps.setInt(1, id_kart);
@@ -450,6 +494,236 @@ public class entidadesDAO
             System.err.println("Error: " + e);
         }
         return kartExist;
+    }
+
+    // FUNCIONES CLASE RESERVA
+
+    public boolean existeReserva(int idReserva)
+    {
+        boolean resertExist = false;
+        try
+        {
+            DBConnection cn = new DBConnection();
+            String query = "SELECT * FROM reserva WHERE idReserva = " + idReserva + "";
+
+            Statement st = cn.conex.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+
+            if(rs.next())
+            {
+                resertExist = true;
+            }
+            else
+            {
+                resertExist = false;
+            }
+            cn.conex.close();
+            st.close();
+        }
+        catch(Exception e)
+        {
+            System.err.println("Error: " + e);
+        }
+        return resertExist;
+    }
+
+
+    public boolean comprobarAntiguedad(String correo) throws SQLException
+    {
+        DBConnection cn = new DBConnection();
+
+        boolean control = false;
+
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        String query = "SELECT * FROM usuario WHERE correo = '" + correo + "'";
+
+        Statement st = cn.conex.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        String fecha_aux;
+        LocalDate fechaInscripcion;
+
+
+        entidades = new entidadesDTO();
+        try
+        {
+            while (rs.next())
+            {
+                fecha_aux = rs.getString("fecha_inscripcion");
+                fechaInscripcion = LocalDate.parse(fecha_aux);
+                entidades.setFechaInscripcion(fechaInscripcion);
+            }
+
+            LocalDate ahora = LocalDate.now();
+
+            fechaInscripcion = entidades.getFechaInscripcion();
+
+            Period periodo = Period.between(fechaInscripcion, ahora);
+            int años = periodo.getYears();
+
+            if (años >= 2)
+            {
+                control = true;
+            }
+            else
+            {
+                control = false;
+            }
+
+            st.close();
+            cn.conex.close();
+        }
+        catch(Exception e)
+        {
+            System.err.print("ERROR: " + e);
+        }
+
+        return control;
+    }
+
+    public void reservaIndividual(String correo, String nom_pista, int idRes, LocalDate fecha, int duracion, String hora, float precio, float descuento) throws SQLException
+    {
+        DBConnection cn = new DBConnection();
+
+        String query = "INSERT INTO reserva (idReserva, precio, duracion, descuento, hora, fecha, usuario, pista) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement ps = cn.conex.prepareStatement(query);
+
+        try
+        {
+            ps.setInt(1, idRes);
+            ps.setFloat(2, precio);
+            ps.setInt(3, duracion);
+            ps.setFloat(4, descuento);
+            ps.setString(5, hora);
+            ps.setDate(6, java.sql.Date.valueOf(fecha));
+            ps.setString(7, correo);
+            ps.setString(8, nom_pista);
+
+            ps.executeUpdate();
+
+            cn.conex.close();
+        }
+        catch(Exception e)
+        {
+            System.err.print("ERROR: " + e);
+        }
+    }
+
+    public ArrayList<entidadesDTO> listarReservas(LocalDate fecha, String pista)
+    {
+        ArrayList<entidadesDTO> lista_reservas = new ArrayList<entidadesDTO>();
+
+        try
+        {
+            DBConnection cn = new DBConnection();
+
+            String query = "SELECT * FROM reserva WHERE fecha = '" + fecha + "' AND pista = '" + pista + "'";
+
+            Statement st = cn.conex.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            while(rs.next())
+            {
+                int idReserva = rs.getInt("idReserva");
+                float precio = rs.getFloat("precio");
+                int duracion = rs.getInt("duracion");
+                float descuento = rs.getFloat("descuento");
+                String hora = rs.getString("hora");
+                String usuario = rs.getString("usuario");
+                lista_reservas.add(new entidadesDTO(idReserva, precio, duracion, descuento, hora, fecha, usuario, pista));
+            }
+
+            cn.conex.close();
+            st.close();
+        }
+        catch (Exception e)
+        {
+            System.err.println(e);
+
+        }
+        return lista_reservas;
+    }
+
+
+    public ArrayList<entidadesDTO> listarReservasFuturas(LocalDate fecha, String pista)
+    {
+        ArrayList<entidadesDTO> lista_reservas = new ArrayList<entidadesDTO>();
+
+        try
+        {
+            DBConnection cn = new DBConnection();
+
+            String query = "SELECT * FROM reserva WHERE fecha >= '" + fecha + "' AND pista = '" + pista + "'";
+
+            Statement st = cn.conex.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            while(rs.next())
+            {
+                int idReserva = rs.getInt("idReserva");
+                float precio = rs.getFloat("precio");
+                int duracion = rs.getInt("duracion");
+                float descuento = rs.getFloat("descuento");
+                String hora = rs.getString("hora");
+                String usuario = rs.getString("usuario");
+                lista_reservas.add(new entidadesDTO(idReserva, precio, duracion, descuento, hora, fecha, usuario, pista));
+            }
+
+            cn.conex.close();
+            st.close();
+        }
+        catch (Exception e)
+        {
+            System.err.println(e);
+
+        }
+        return lista_reservas;
+    }
+
+    public void cancelarReserva(int idRes) throws SQLException
+    {
+        try
+        {
+            DBConnection cn = new DBConnection();
+            String query = "DELETE FROM reserva WHERE idReserva = " + idRes + "";
+            PreparedStatement ps = cn.conex.prepareStatement(query);
+
+            status = ps.executeUpdate();
+            cn.conex.close();
+        }
+        catch (Exception e)
+        {
+            System.err.println("ERROR: " + e);
+        }
+    }
+
+    public void actualizarReserva(String correo, String nom_pista, int idRes, LocalDate fecha, int duracion, String hora, float precio, float descuento)
+    {
+        DBConnection cn = new DBConnection();
+
+        try
+        {
+            String query = "UPDATE reserva SET idReserva = ?, precio = ?, duracion = ?, descuento = ?, hora = ?, fecha = ?, usuario = ?, pista = ? WHERE idReserva = " + idRes + "";
+            PreparedStatement ps = cn.conex.prepareStatement(query);
+
+            ps.setInt(1, idRes);
+            ps.setFloat(2, precio);
+            ps.setInt(3, duracion);
+            ps.setFloat(4, descuento);
+            ps.setString(5, hora);
+            ps.setString(6, String.valueOf(fecha));
+            ps.setString(7, correo);
+            ps.setString(8, nom_pista);
+
+            status = ps.executeUpdate();
+            cn.conex.close();
+            System.out.print("\n --- RESERVA ACTUALIZADA CON EXITO --- \n");
+        }
+        catch(Exception e)
+        {
+            System.out.println("ERROR: " + e);
+        }
     }
 
 }

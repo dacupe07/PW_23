@@ -1,6 +1,6 @@
 package es.uco.pw.business;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class entidadesDTO
 {
@@ -10,8 +10,8 @@ public class entidadesDTO
 
     protected String correo;
     protected String nombre;
-    protected Date fecha_nacimiento;
-    protected Date fecha_inscripcion;
+    protected LocalDate fecha_nacimiento;
+    protected LocalDate fecha_inscripcion;
 
     /*
         ATRIBUTOS DE LA CLASE KART
@@ -39,7 +39,7 @@ public class entidadesDTO
     protected int duracion;
     protected float descuento;
     protected String hora;
-    protected Date fecha;
+    protected LocalDate fecha;
     protected String usuario;
     protected String pista;
 
@@ -51,12 +51,12 @@ public class entidadesDTO
     protected String correo_usuario;
     protected int num_sesiones;
     protected String tipo_bono;
-    protected Date caducidad;
+    protected LocalDate caducidad;
     protected double desc;
 
     // CONSTRUCTOR CLASE USUARIO
 
-    public entidadesDTO(String correo, String nombre, Date fecha_nacimiento, Date fecha_inscripcion)
+    public entidadesDTO(String correo, String nombre, LocalDate fecha_nacimiento, LocalDate fecha_inscripcion)
     {
         this.correo = correo;
         this.nombre = nombre;
@@ -85,7 +85,7 @@ public class entidadesDTO
 
     //CONSTRUCTOR CLASE BONO
 
-    public entidadesDTO(int id_bono, String correo_usuario, int num_sesiones, String tipo_bono, Date caducidad, double desc)
+    public entidadesDTO(int id_bono, String correo_usuario, int num_sesiones, String tipo_bono, LocalDate caducidad, double desc)
     {
         this.id_bono = id_bono;
         this.correo_usuario = correo_usuario;
@@ -97,7 +97,7 @@ public class entidadesDTO
 
     // CONSTRUCTOR CLASE RESERVA
 
-    public entidadesDTO(int id_reserva, float precio, int duracion, float descuento, String hora, Date fecha, String usuario, String nom_pista)
+    public entidadesDTO(int id_reserva, float precio, int duracion, float descuento, String hora, LocalDate fecha, String usuario, String nom_pista)
     {
         this.id_reserva = id_reserva;
         this.precio = precio;
@@ -106,7 +106,7 @@ public class entidadesDTO
         this.hora = hora;
         this.fecha = fecha;
         this.usuario = usuario;
-        this.nom_pista = pista;
+        this.nom_pista = nom_pista;
     }
 
     // CONSTRUCTOR VACIO
@@ -140,22 +140,22 @@ public class entidadesDTO
         this.correo = correo;
     }
 
-    public Date getFechaNacimiento()
+    public LocalDate getFechaNacimiento()
     {
         return this.fecha_nacimiento;
     }
 
-    public void setFechaNacimiento(Date fecha_nacimiento)
+    public void setFechaNacimiento(LocalDate fecha_nacimiento)
     {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public Date getFechaInscripcion()
+    public LocalDate getFechaInscripcion()
     {
         return this.fecha_inscripcion;
     }
 
-    public void setFechaInscripcion(Date fecha_inscripcioh)
+    public void setFechaInscripcion(LocalDate fecha_inscripcioh)
     {
         this.fecha_inscripcion = fecha_inscripcioh;
     }
@@ -276,12 +276,12 @@ public class entidadesDTO
         this.tipo_bono = tipo_bono;
     }
 
-    public Date getCaducidad()
+    public LocalDate getCaducidad()
     {
         return this.caducidad;
     }
 
-    public void setCaducidad(Date caducidad)
+    public void setCaducidad(LocalDate caducidad)
     {
         this.caducidad = caducidad;
     }
@@ -368,12 +368,12 @@ public class entidadesDTO
         this.descuento = descuento;
     }
 
-    public Date getFecha()
+    public LocalDate getFecha()
     {
         return this.fecha;
     }
 
-    public void setFecha(Date fecha)
+    public void setFecha(LocalDate fecha)
     {
         this.fecha = fecha;
     }
@@ -406,7 +406,7 @@ public class entidadesDTO
 
     public String toStringReserva()
     {
-        String info = "\nID: " + this.id_reserva + ". Precio: " + this.precio + ". Duracion: " + this.duracion + ". Descuento: " + this.descuento + ". Hora de reserva: " + this.hora + ". Fecha de reserva: " + this.fecha + ". Usuario: " + this.correo_usuario + ". Pista: " + this.pista;
+        String info = "\nID: " + this.id_reserva + ". Precio: " + this.precio + ". Duracion: " + this.duracion + ". Descuento: " + this.descuento + ". Hora de reserva: " + this.hora + ". Fecha de reserva: " + this.fecha + ". Usuario: " + this.usuario + ". Pista: " + this.nom_pista;
         return info;
     }
 }

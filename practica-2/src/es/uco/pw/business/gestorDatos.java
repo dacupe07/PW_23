@@ -4,10 +4,9 @@ import es.uco.pw.dao.entidadesDAO;
 
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Scanner;
 
 public class gestorDatos
@@ -31,8 +30,13 @@ public class gestorDatos
 
     entidadesDAO crearKart = new entidadesDAO();
     entidadesDAO listarKartsDisponibles = new entidadesDAO();
-
     entidadesDAO asociarKartPista = new entidadesDAO();
+
+
+    entidadesDAO reservarIndividual = new entidadesDAO();
+    entidadesDAO establecePrecio = new entidadesDAO();
+    entidadesDAO cancelaReserva = new entidadesDAO();
+    entidadesDAO actualizaReserva = new entidadesDAO();
 
     public String listarUsuariosBBDD()
     {
@@ -49,21 +53,12 @@ public class gestorDatos
     }
 
     public void crearUsuarioBBDD() throws ParseException, SQLException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         Scanner entrada = new Scanner(System.in);
         String nombre, correo, fecha_inscripcion_aux, fecha_nacimiento_aux;
-        Date fecha_inscripcion, fecha_nacimiento;
+        LocalDate fecha_inscripcion, fecha_nacimiento;
 
-        Calendar c1 = Calendar.getInstance();
-
-        String dia = Integer.toString(c1.get(Calendar.DATE));
-        String mes = Integer.toString(c1.get(Calendar.MONTH));
-        String year = Integer.toString(c1.get(Calendar.YEAR));
-
-        fecha_inscripcion_aux = year + "/" + mes + "/" + dia;
-        fecha_inscripcion = sdf.parse(fecha_inscripcion_aux);
-
-
+        fecha_inscripcion = LocalDate.now();
 
         System.out.print("Introduce el correo del usuario: ");
         correo = entrada.nextLine();
@@ -73,7 +68,7 @@ public class gestorDatos
 
         System.out.print("Introduce la fecha de nacimiento (YYYY/MM/DD): ");
         fecha_nacimiento_aux = entrada.nextLine();
-        fecha_nacimiento = sdf.parse(fecha_nacimiento_aux);
+        fecha_nacimiento = LocalDate.parse(fecha_nacimiento_aux, fmt);
 
 
         crearUsuario.registrarUsuario(correo, nombre, fecha_nacimiento, fecha_inscripcion);
@@ -91,25 +86,16 @@ public class gestorDatos
     }
 
     public void actualizarUsuarioBBDD() throws ParseException, SQLException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         Scanner entrada = new Scanner(System.in);
-        String nombre, correo_aux, correo, fecha_inscripcion_aux, fecha_nacimiento_aux;
-        Date fecha_inscripcion, fecha_nacimiento;
+        String nombre, correo_aux, correo, fecha_inscripcion_aux, fecha_nacimiento_aux, control;
+        LocalDate fecha_inscripcion, fecha_nacimiento;
 
         System.out.print("Introduce el email del usuario que desea actualizar: ");
         correo_aux = entrada.nextLine();
 
         if(actualizarUsuario.existeUsuario(correo_aux) == true)
         {
-            Calendar c1 = Calendar.getInstance();
-
-            String dia = Integer.toString(c1.get(Calendar.DATE));
-            String mes = Integer.toString(c1.get(Calendar.MONTH));
-            String year = Integer.toString(c1.get(Calendar.YEAR));
-
-            fecha_inscripcion_aux = year + "/" + mes + "/" + dia;
-            fecha_inscripcion = sdf.parse(fecha_inscripcion_aux);
-
 
             System.out.print("Introduce el correo del usuario: ");
             correo = entrada.nextLine();
@@ -119,7 +105,32 @@ public class gestorDatos
 
             System.out.print("Introduce la fecha de nacimiento (YYYY/MM/DD): ");
             fecha_nacimiento_aux = entrada.nextLine();
-            fecha_nacimiento = sdf.parse(fecha_nacimiento_aux);
+            fecha_nacimiento = LocalDate.parse(fecha_nacimiento_aux, fmt);
+
+            System.out.print("¿Desea modificar la fecha de inscripcion? (S -> Si / N -> No:" );
+            control = entrada.nextLine();
+
+            if(control.equals("S"))
+            {
+                System.out.print("¿Desea aplicar la fecha actual (S / N)?: ");
+                control = entrada.nextLine();
+
+                if(control.equals("S"))
+                {
+                    fecha_inscripcion = LocalDate.now();
+                }
+                else
+                {
+                    System.out.print("Introduce la fecha de inscripcion (YYYY/MM/DD): ");
+                    fecha_inscripcion_aux = entrada.nextLine();
+                    fecha_inscripcion = LocalDate.parse(fecha_inscripcion_aux, fmt);
+                }
+            }
+            else
+            {
+                fecha_inscripcion = actualizarUsuario.obtenerFecha(correo);
+
+            }
 
             actualizarUsuario.actualizarUsuario(correo, nombre, fecha_nacimiento, fecha_inscripcion, correo_aux);
         }
@@ -264,5 +275,217 @@ public class gestorDatos
             System.out.print("El kart introducido no existe en la BBDD");
         }
 
+    }
+
+    public float establecerPrecio(int duracion, String email) throws SQLException
+    {
+        float precio = 0;
+
+        if(duracion == 60)
+        {
+            precio = 20;
+        }
+        else if(duracion == 90)
+        {
+            precio = 30;
+        }
+        else if(duracion == 120)
+        {
+            precio = 40;
+        }
+
+        if(establecePrecio.comprobarAntiguedad(email) && duracion == 60)
+        {
+            precio = precio - 2;
+        }
+
+        if(establecePrecio.comprobarAntiguedad(email) && duracion == 90)
+        {
+            precio = precio - 3;
+        }
+
+        if(establecePrecio.comprobarAntiguedad(email) && duracion == 120)
+        {
+            precio = precio - 4;
+        }
+
+        return precio;
+    }
+
+    public void reservaIndividualBBDD() throws SQLException
+    {
+        Scanner sc = new Scanner(System.in);
+        String correo;
+        String nom_pista;
+        int idRes, duracion;
+        float precio, descuento;
+        String hora;
+        LocalDate fecha;
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+
+
+        System.out.print("Introduce el correo del usuario: ");
+        correo = sc.nextLine();
+
+        if(reservarIndividual.existeUsuario(correo))
+        {
+            System.out.print("Introduce el nombre de la pista: ");
+            nom_pista = sc.nextLine();
+
+            if(reservarIndividual.existePista(nom_pista))
+            {
+                System.out.print("Introduce el ID de la reserva: ");
+                idRes = sc.nextInt();
+                sc.nextLine();
+
+                System.out.print("Introduce la fecha de la reserva: ");
+                fecha = LocalDate.parse(sc.nextLine(), fmt);
+
+                System.out.print("Introduce la duracion de la reserva (60 min / 90 min / 120 min): ");
+                duracion = sc.nextInt();
+                sc.nextLine();
+
+                System.out.print("Introduce la hora de la reserva: ");
+                hora = sc.nextLine();
+
+                if(reservarIndividual.comprobarAntiguedad(correo) == true)
+                {
+                    descuento = 10;
+                }
+                else
+                {
+                    descuento = 0;
+                }
+
+                precio = establecerPrecio(duracion, correo);
+
+                reservarIndividual.reservaIndividual(correo, nom_pista, idRes, fecha, duracion, hora, precio, descuento);
+            }
+        }
+    }
+
+    public String listarReservasBBDD()
+    {
+        Scanner sc = new Scanner(System.in);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+        System.out.print("Introduce la fecha de la reserva: ");
+        LocalDate fecha = LocalDate.parse(sc.nextLine(), fmt);
+
+        System.out.print("Introduce la pista: ");
+        String pista = sc.nextLine();
+
+        String reserva = "";
+
+        ArrayList<entidadesDTO> reservas = listaUsuarios.listarReservas(fecha, pista);
+
+        for(entidadesDTO u: reservas)
+        {
+            reserva = reserva + u.toStringReserva() + "\n";
+        }
+
+        return reserva;
+    }
+
+    public String listarReservasFuturasBBDD()
+    {
+        Scanner sc = new Scanner(System.in);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+        LocalDate fecha = LocalDate.now();
+
+        System.out.print("Introduce la pista: ");
+        String pista = sc.nextLine();
+
+        String reserva = "";
+
+        ArrayList<entidadesDTO> reservas = listaUsuarios.listarReservasFuturas(fecha, pista);
+
+        for(entidadesDTO u: reservas)
+        {
+            reserva = reserva + u.toStringReserva() + "\n";
+        }
+
+        return reserva;
+    }
+
+    public void cancelarReservaBBDD() throws ParseException, SQLException {
+        Scanner entrada = new Scanner(System.in);
+        int idRes;
+
+        System.out.print("Introduce la ID de la reserva: ");
+        idRes = entrada.nextInt();
+        entrada.nextLine();
+
+        cancelaReserva.cancelarReserva(idRes);
+        System.out.println("\n--- USUARIO ELIMINADO CON EXITO ---\n");
+    }
+
+    public void actualizarReservaBBDD() throws ParseException, SQLException {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        Scanner entrada = new Scanner(System.in);
+        int idRes, duracion;
+        String correo, nombre, hora;
+        LocalDate fecha;
+        float descuento;
+
+        System.out.print("Introduce el ID de la reserva: ");
+        idRes = entrada.nextInt();
+        entrada.nextLine();
+
+        if(actualizaReserva.existeReserva(idRes) == true)
+        {
+
+            System.out.print("Introduce el correo del usuario: ");
+            correo = entrada.nextLine();
+
+            if(actualizaReserva.existeUsuario(correo) == true)
+            {
+                System.out.print("Introduce el nombre de la pista: ");
+                nombre = entrada.nextLine();
+
+                if(actualizaReserva.existePista(nombre) == true)
+                {
+                    System.out.print("Introduce la fecha de reserva (YYYY/MM/DD): ");
+                    fecha = LocalDate.parse(entrada.nextLine(), fmt);
+
+                    System.out.print("Introduce la duracion de la reserva: ");
+                    duracion = entrada.nextInt();
+                    entrada.nextLine();
+
+                    System.out.print("Introduce la hora de la reserva: ");
+                    hora = entrada.nextLine();
+
+                    if (actualizaReserva.comprobarAntiguedad(correo) == true)
+                    {
+                        descuento = 10;
+                    }
+                    else
+                    {
+                        descuento = 0;
+                    }
+
+
+                    float precio = establecerPrecio(duracion, correo);
+                    actualizaReserva.actualizarReserva(correo, nombre, idRes, fecha, duracion, hora, precio, descuento);
+                }
+            }
+        }
+        else
+        {
+            String respuesta = "";
+            System.out.print("La reserva introducida no existe, ¿Desea crearla? (S -> Si / N -> No): ");
+            respuesta = entrada.nextLine();
+
+            if(respuesta == "S" || respuesta == "s")
+            {
+                reservaIndividualBBDD();
+            }
+            else
+            {
+                System.out.print("Regresando al menu...");
+            }
+        }
     }
 }
