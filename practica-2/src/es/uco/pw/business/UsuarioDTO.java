@@ -1,6 +1,6 @@
 package es.uco.pw.business;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class UsuarioDTO {
 	
@@ -10,11 +10,12 @@ public class UsuarioDTO {
 
 		protected String correo;
 		protected String nombre;
-		protected Date fecha_nacimiento;
-		protected Date fecha_inscripcion;
+		protected LocalDate fecha_nacimiento;
+		protected LocalDate fecha_inscripcion;
 		
+		public UsuarioDTO() {}
 		
-		public UsuarioDTO(String correo, String nombre, Date fecha_nacimiento, Date fecha_inscripcion)
+		public UsuarioDTO(String correo, String nombre, LocalDate fecha_nacimiento, LocalDate fecha_inscripcion)
 	    {
 	        this.correo = correo;
 	        this.nombre = nombre;
@@ -42,22 +43,22 @@ public class UsuarioDTO {
 		        this.correo = correo;
 		    }
 
-		    public Date getFechaNacimiento()
+		    public LocalDate getFechaNacimiento()
 		    {
 		        return this.fecha_nacimiento;
 		    }
 
-		    public void setFechaNacimiento(Date fecha_nacimiento)
+		    public void setFechaNacimiento(LocalDate fecha_nacimiento)
 		    {
 		        this.fecha_nacimiento = fecha_nacimiento;
 		    }
 
-		    public Date getFechaInscripcion()
+		    public LocalDate getFechaInscripcion()
 		    {
 		        return this.fecha_inscripcion;
 		    }
 
-		    public void setFechaInscripcion(Date fecha_inscripcioh)
+		    public void setFechaInscripcion(LocalDate fecha_inscripcioh)
 		    {
 		        this.fecha_inscripcion = fecha_inscripcioh;
 		    }
