@@ -26,6 +26,10 @@ public class gestorUsuarios
 
     // FUNCIONES
 
+    /**Funcion para verificar si un correo es valido
+     * @param correo
+     * @return true si es correcto false si no lo es
+     */
     public boolean verificar_Email(String correo)
     {
 
@@ -39,6 +43,10 @@ public class gestorUsuarios
 
     }
 
+    /**Funcion gestora para listar los usuarios
+     * @param sql
+     * @return list_usuario String con toda la informacion de los usuarios
+     */
     public String listarUsuariosBBDD(Properties sql)
     {
         String list_usuario = "";
@@ -53,6 +61,10 @@ public class gestorUsuarios
         return list_usuario;
     }
 
+    /**Funcion para verificar si una fecha es valida
+     * @param fecha
+     * @return
+     */
     public boolean verificar_fecha(String fecha)
     {
         //Pattern pattern = Pattern.compile("^([0-2][0-9]|3[0-1])(\\/|-)(0[1-9]|1[0-2])(\\/|-)\\2(\\d{4})$");
@@ -65,6 +77,11 @@ public class gestorUsuarios
 
     }
 
+    /**Funcion gestora pra crear un usuario
+     * @param sql
+     * @throws ParseException
+     * @throws SQLException
+     */
     public void crearUsuarioBBDD(Properties sql) throws ParseException, SQLException
     {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -103,7 +120,11 @@ public class gestorUsuarios
         }
     }
 
-
+    /**Funcion gestora para borrar un usuario
+     * @param sql
+     * @throws ParseException
+     * @throws SQLException
+     */
     public void borrarUsuarioBBDD(Properties sql) throws ParseException, SQLException {
         Scanner entrada = new Scanner(System.in);
         String correo;
@@ -123,6 +144,11 @@ public class gestorUsuarios
         }
     }
 
+    /**Funcion gestora para actualizar un usuario
+     * @param sql
+     * @throws ParseException
+     * @throws SQLException
+     */
     public void actualizarUsuarioBBDD(Properties sql) throws ParseException, SQLException {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         Scanner entrada = new Scanner(System.in);

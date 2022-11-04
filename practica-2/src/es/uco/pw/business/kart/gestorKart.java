@@ -23,6 +23,9 @@ public class gestorKart
 
     // FUNCIONES
 
+    /**Funcion gestora para crear un kart
+     * @param sql Properties con todas las sentencias sql
+     */
     public void crearKartBBDD(Properties sql)
     {
         Scanner entrada = new Scanner(System.in);
@@ -46,7 +49,10 @@ public class gestorKart
         kart.crearKart(id_kart, tipo, Estado, sql);
     }
 
-
+    /**Funcion gestora para listar los karts
+     * @param sql Properties con todas las sentencias sql
+     * @return kart_list String con toda la informacion de los karts disponibles
+     */
     public String listarKartsDisponiblesBBDD(Properties sql)
     {
         String kart_list = "";
@@ -61,7 +67,9 @@ public class gestorKart
         return kart_list;
     }
 
-
+    /**Funcion gestora para asociar un kart a una pista
+     * @param sql Properties con todas las sentencias sql
+     */
     public void asociarKartPistaBBDD(Properties sql)
     {
         Scanner sc = new Scanner(System.in);

@@ -33,6 +33,13 @@ public class gestorReserva
 
     // FUNCIONES
 
+    /**Funcion para calcular el precio de una reserva
+     * @param duracion
+     * @param email
+     * @param sql Properties con todas las sentencias sql
+     * @return precio
+     * @throws SQLException
+     */
     public float establecerPrecio(int duracion, String email, Properties sql) throws SQLException
     {
         float precio = 0;
@@ -69,7 +76,10 @@ public class gestorReserva
     }
 
 
-
+    /**Funcion gestora para hacer una reserva individual 
+     * @param sql Properties con todas las sentencias sql
+     * @throws SQLException
+     */
     public void reservaIndividualBBDD(Properties sql) throws SQLException
     {
         Scanner sc = new Scanner(System.in);
@@ -126,7 +136,10 @@ public class gestorReserva
         }
     }
 
-
+    /**Funcion gestora para listar las reservas
+     * @param sql Properties con todas las sentencias sql
+     * @return lista_reservas
+     */
     public String listarReservasBBDD(Properties sql)
     {
         Scanner sc = new Scanner(System.in);
@@ -151,7 +164,10 @@ public class gestorReserva
     }
 
 
-
+    /**Funcion gestora para listar reservas futuras
+     * @param sql Properties con todas las sentencias sql
+     * @return lista_reserva
+     */
     public String listarReservasFuturasBBDD(Properties sql)
     {
         Scanner sc = new Scanner(System.in);
@@ -175,7 +191,11 @@ public class gestorReserva
     }
 
 
-
+    /** Funcion gestora para borrar una reserva
+     * @param sql Properties con todas las sentencias sql
+     * @throws ParseException
+     * @throws SQLException
+     */
     public void cancelarReservaBBDD(Properties sql) throws ParseException, SQLException {
         Scanner entrada = new Scanner(System.in);
         int idRes;
@@ -189,7 +209,11 @@ public class gestorReserva
     }
 
 
-
+    /**Funcion gestora para actualizar una reserva
+     * @param sql Properties con todas las sentencias sql
+     * @throws ParseException
+     * @throws SQLException
+     */
     public void actualizarReservaBBDD(Properties sql) throws ParseException, SQLException {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         Scanner entrada = new Scanner(System.in);

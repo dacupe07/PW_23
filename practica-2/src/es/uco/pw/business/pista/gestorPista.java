@@ -21,6 +21,9 @@ public class gestorPista
 
     // FUNCIONES
 
+    /**Funcion gestora para crear una pista 
+     * @param sql Properties con todas las sentencias sql
+     */
     public void crearPistaBBDD(Properties sql)
     {
         Scanner entrada = new Scanner(System.in);
@@ -49,7 +52,10 @@ public class gestorPista
         pista.crearPista(nombre, estado, Dificultad, num_max, sql);
     }
 
-
+    /**Funcion gestora para listar las pistas en mantenimiento
+     * @param sql Properties con todas las sentencias sql
+     * @return pista_list String con la informacion de las pistas libres
+     */
     public String listarPistasMantenimientoBBDD(Properties sql)
     {
         String pista_list = "";
@@ -64,7 +70,10 @@ public class gestorPista
         return pista_list;
     }
 
-
+    /**Funcion gestora para listar las pistas disponibles
+     * @param sql Properties con todas las sentencias sql
+     * @return pista_list String con toda la informacion de las pistas disponibles
+     */
     public String listarPistasDisponiblesBBDD(Properties sql)
     {
         String pista_list = "";
