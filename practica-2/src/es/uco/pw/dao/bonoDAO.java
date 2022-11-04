@@ -27,6 +27,10 @@ public class bonoDAO
 
     // FUNCIONES
 
+    /**Funcion para existe un bono
+     * @param IDbono
+     * @param sql Archivo properties con todas las consutas sql
+     */
     public boolean existeBono(int IDbono,Properties sql)
     {
         boolean bonoExist = false;
@@ -56,6 +60,10 @@ public class bonoDAO
         return bonoExist;
     }
 
+    /**Funcion para crear bono
+     * @param bono
+     * @param sql Archivo properties con todas las consutas sql
+     */
     public int crearBono(bonoDTO bono,Properties sql)
     {
 
@@ -95,6 +103,10 @@ public class bonoDAO
         return status;
     }
 
+    /**Funcion para listar los bonos
+     * @param sql Archivo properties con todas las consutas sql
+     * @return lista_bonos Lista todos los bonos
+     */
     public ArrayList<bonoDTO> listarBonos(Properties sql)
     {
         ArrayList<bonoDTO> lista_bonos = new ArrayList<bonoDTO>();
@@ -128,6 +140,11 @@ public class bonoDAO
         return lista_bonos;
     }
 
+    /**Funcion para eliminar un bono
+     * @param correo
+     * @param sql Archivo properties con todas las consultas sql
+     * @throws SQLException
+     */
     public int eliminarUsuario(int id,Properties sql) throws SQLException
     {
         int status=0;
@@ -147,6 +164,11 @@ public class bonoDAO
         return status;
     }
 
+    /**Funcion para saber si un usuario tiene un bono valido
+     * @param correo
+     * @param sql Archivo properties con todas las consultas sql
+     * @throws SQLException
+     */
     public boolean tieneBono(String correo,Properties sql)
     {
         boolean bonoExist=false;
