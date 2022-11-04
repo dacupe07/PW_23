@@ -32,6 +32,12 @@ public class kartDAO
 
     // FUNCIONES
 
+    /**Funcion para crear un objeto de tipo kart en la base de datos
+     * @param id_kart 
+     * @param tipo
+     * @param estado
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     */
     public void crearKart(int id_kart, String tipo, estado Estado, Properties sql)
     {
         DBConnection cn = new DBConnection();
@@ -54,7 +60,9 @@ public class kartDAO
     }
 
 
-
+    /**Funcion para consultar en la base de datos los karts disponibles
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     */
     public ArrayList<kartDTO> listarKartsDisponibles(Properties sql)
     {
         ArrayList<kartDTO> lista_karts = new ArrayList<kartDTO>();
@@ -88,7 +96,11 @@ public class kartDAO
     }
 
 
-
+    /**Funcion para asociar karts a la pista que hay en la base de datos
+     * @param id_kart
+     * @param nombre_pista
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     */
     public void listaKartPista(int id_kart, String nombre_pista, Properties sql)
     {
         DBConnection cn = new DBConnection();
@@ -187,7 +199,10 @@ public class kartDAO
     }
 
 
-
+    /**Funcion para comprobar la existencia de un kart en la base de datos
+     * @param id_kart
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     */
     public boolean existeKart(int id_kart, Properties sql)
     {
         boolean kartExist = false;

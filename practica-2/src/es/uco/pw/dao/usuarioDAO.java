@@ -22,7 +22,11 @@ public class usuarioDAO
     }
 
     // FUNCIONES
-
+    /**Funcion para comprobar la existencia de un usuario en la base datos
+     * @param correo
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     * @return userExist true si existe,false en caso contrario
+     */
     public boolean existeUsuario(String correo, Properties sql)
     {
         boolean userExist = false;
@@ -54,7 +58,10 @@ public class usuarioDAO
     }
 
 
-
+    /**Funcion para consultar todos usuario que hay en la base datos
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     * @return lista_usuarios
+     */
     public ArrayList<usuarioDTO> listarUsuariosRegistrados(Properties sql)
     {
         ArrayList<usuarioDTO> lista_usuarios = new ArrayList<usuarioDTO>();
@@ -90,7 +97,14 @@ public class usuarioDAO
     }
 
 
-
+    /**Funcion para crear un usuario en la base datos 
+     * @param correo
+     * @param nombre 
+     * @param fecha_nacimiento 
+     * @param fecha_inscripcion
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     * @throws SQLException
+     */
     public void registrarUsuario(String correo, String nombre, LocalDate fecha_nacimiento, LocalDate fecha_inscripcion, Properties sql) throws SQLException
     {
         try
@@ -125,7 +139,11 @@ public class usuarioDAO
     }
 
 
-
+    /**Funcion para eliminar un usuario de la base de datos
+     * @param correo
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     * @throws SQLException
+     */
     public void eliminarUsuario(String correo, Properties sql) throws SQLException
     {
         try
@@ -144,7 +162,14 @@ public class usuarioDAO
     }
 
 
-
+     /**Funcion para actualizar un usuario en la base datos
+     * @param correo
+     * @param nombre 
+     * @param fecha_nacimiento 
+     * @param fecha_inscripcion
+     * @param correo_aux
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     */
     public void actualizarUsuario(String correo, String nombre, LocalDate fecha_nacimiento, LocalDate fecha_inscripcion, String correo_aux, Properties sql)
     {
         DBConnection cn = new DBConnection();
@@ -173,7 +198,12 @@ public class usuarioDAO
     }
 
 
-
+    /**Funcion para obtener la fecha de inscripcion de un usuario
+     * @param correo
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     * @return fecha fecha de inscripcion de un usuario
+     * @throws SQLException
+     */
     public LocalDate obtenerFecha(String correo, Properties sql) throws SQLException
     {
         DBConnection cn = new DBConnection();

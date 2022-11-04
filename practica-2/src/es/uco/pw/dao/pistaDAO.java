@@ -25,6 +25,13 @@ public class pistaDAO
 
     // FUNCIONES
 
+    /**Funcion para crear pistas asociadas a la pista que hay en la base de datos
+     * @param nombre
+     * @param estado
+     * @param dificultad
+     * @param num_max
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     */
     public void crearPista(String nombre, String estado, dificultad Dificultad, int num_max, Properties sql)
     {
         DBConnection cn = new DBConnection();
@@ -48,7 +55,10 @@ public class pistaDAO
     }
 
 
-
+    /**Funcion para consultar las pistas que estan en mantenimiento
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     * @return lista_pistas
+     */
     public ArrayList<pistaDTO> listarPistasMantenimiento(Properties sql)
     {
         ArrayList<pistaDTO> lista_pistas = new ArrayList<pistaDTO>();
@@ -83,7 +93,10 @@ public class pistaDAO
     }
 
 
-
+    /**Funcion para consultar las pistas que estan disponibles
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     * @return lista_pistas
+     */
     public ArrayList<pistaDTO> listarPistasDisponibles(Properties sql)
     {
         ArrayList<pistaDTO> lista_pistas = new ArrayList<pistaDTO>();
@@ -118,7 +131,11 @@ public class pistaDAO
     }
 
 
-
+    /**Funcion para consultar si existe una pista
+     * @param nombre
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     * @return pistaExist true si existe, false en caso contrario
+     */
     public boolean existePista(String nombre, Properties sql)
     {
         boolean pistaExist = false;

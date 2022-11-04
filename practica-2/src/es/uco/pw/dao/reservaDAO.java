@@ -32,7 +32,11 @@ public class reservaDAO
 
     // FUNCIONES
 
-
+    /**Funcion para consultar la existencia de una reserva
+     * @param idReserva
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     * @return resertExist true si existe, false en caso contrario
+     */
     public boolean existeReserva(int idReserva, Properties sql)
     {
         boolean resertExist = false;
@@ -64,7 +68,12 @@ public class reservaDAO
     }
 
 
-
+    /**Funcion que comprueba la antiguedad de un usuario
+     * @param correo
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     * @return control true si la antiguedad es mayor de 2 años
+     * @throws SQLException
+     */
     public boolean comprobarAntiguedad(String correo, Properties sql) throws SQLException
     {
         DBConnection cn = new DBConnection();
@@ -118,7 +127,18 @@ public class reservaDAO
         return control;
     }
 
-
+    /**Funcion para crear una reserva individual en la base de datos
+     * @param correo
+     * @param nom_pista
+     * @param idRes
+     * @param fecha
+     * @param duracion
+     * @param hora
+     * @param precio
+     * @param descuento
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     * @throws SQLException
+     */
     public void reservaIndividual(String correo, String nom_pista, int idRes, LocalDate fecha, int duracion, String hora, float precio, float descuento, Properties sql) throws SQLException
     {
         DBConnection cn = new DBConnection();
@@ -149,7 +169,12 @@ public class reservaDAO
     }
 
 
-
+    /**Funcion para listar las reservas que hay en una fecha y para una pista
+     * @param fecha
+     * @param pista
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     * @return lista_reservas
+     */
     public ArrayList<reservaDTO> listarReservas(LocalDate fecha, String pista, Properties sql)
     {
         ArrayList<reservaDTO> lista_reservas = new ArrayList<reservaDTO>();
@@ -185,7 +210,12 @@ public class reservaDAO
         return lista_reservas;
     }
 
-
+    /**Funcion que lista las reservas que hay despues de una fecha
+     * @param fecha
+     * @param pista
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     * @return lista_reservas
+     */
     public ArrayList<reservaDTO> listarReservasFuturas(LocalDate fecha, String pista, Properties sql)
     {
         ArrayList<reservaDTO> lista_reservas = new ArrayList<reservaDTO>();
@@ -222,7 +252,11 @@ public class reservaDAO
     }
 
 
-
+    /**Funcion para eliminar una reserva de la base de datos
+     * @param idRes
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     * @throws SQLException
+     */
     public void cancelarReserva(int idRes, Properties sql) throws SQLException
     {
         try
@@ -240,7 +274,17 @@ public class reservaDAO
         }
     }
 
-
+    /**Funcion para actualizar una reserva en la base de datos
+     * @param correo
+     * @param nom_pista
+     * @param idRes
+     * @param fecha
+     * @param duracion
+     * @param hora
+     * @param precio
+     * @param descuento
+     * @param sql Properties que contiene las sentencias sql utilizadas
+     */
     public void actualizarReserva(String correo, String nom_pista, int idRes, LocalDate fecha, int duracion, String hora, float precio, float descuento, Properties sql)
     {
         DBConnection cn = new DBConnection();
