@@ -1,5 +1,0 @@
-ID: 92. Usuario: Javier Gallardo. Especialidad: ADULTOS. Sesiones: 5. FechaCaducidad: null
-ID: 4. Usuario: alberto. Especialidad: ADULTOS. Sesiones: 5. FechaCaducidad: 08/10/2023
-ID: 13. Usuario: maria. Especialidad: INFANTIL. Sesiones: 5. FechaCaducidad: 09/10/2023
-ID: 48. Usuario: Cristian. Especialidad: FAMILIAR. Sesiones: 5. FechaCaducidad: 09/10/2023
-ID: 96. Usuario: luis. Especialidad: ADULTOS. Sesiones: 5. FechaCaducidad: 10/10/2023

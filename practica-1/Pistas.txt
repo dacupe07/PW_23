@@ -1,2 +1,0 @@
-Nombre: mollerusa. Estado: Disponible. Dificultad: ADULTOS. Num_Max: 120
-Nombre: manolita. Estado: Ocupada. Dificultad: ADULTOS. Num_Max: 30
