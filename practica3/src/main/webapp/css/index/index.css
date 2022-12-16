@@ -1,0 +1,247 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body 
+{
+  font-family: courier;
+  background: linear-gradient(to bottom, #D4F5F7 10%, #2692E0 100%);
+  color: white;
+  display: grid;
+}
+.contenedor .imagen {
+    grid-area: myimage;
+
+}
+.contenedor .titleMid{
+	grid-area: mid;
+	font-family: courier;
+    color:black;
+	width: auto;
+	height: 700px;
+}
+
+.contenedor .titleMid .registro
+{
+	text-align: center;
+	width: 400px;
+    height: auto;
+	opacity: 1;
+	background-color: rgba(255,255,255,0.7);
+    box-sizing: border-box;
+    padding: 30px 30px;
+    font-family: courier;
+
+	text-decoration: none;
+	margin: auto;
+}
+
+
+.contenedor {
+    width: 100%;
+    max-width: auto;
+}
+
+.contenedor .header {
+	width: auto;
+    padding: 20px;
+	background: linear-gradient(to bottom, #FFFFFF , #000000 100%) !important;
+    
+}
+
+.contenedor .header .logeo
+{
+	text-align:right;
+	font-size: 13px;
+}
+
+.contenedor .header .logeo .logo
+{
+	text-align: left;
+}
+
+.contenedor .header .titulo {
+    text-align: center;
+    display: flex;/*Uso flexbox en ocmbinacion con css grid para centrar el texto*/
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+
+
+.contenedor .registration-box 
+{
+    width: auto;
+    height: auto;
+	opacity: 1;
+	background-color: rgba(28,107,180,0.7);
+    grid-area: sidebar-izquierda;
+    box-sizing: border-box;
+    padding: 30px 30px;
+    font-family: courier;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 20px rgba(0, 0, 0, 0.19);
+}
+
+
+.registration-box a:link 
+{
+	/* Sirve para acompañar al texto con una delgada linea
+		- Valores posibles:
+		- underline: Subrayado bajo el texto
+		- through: Subrayado sobre el texto
+		- overline: Encima del texto
+		- none: sin subrayado */
+    text-decoration: none;
+	
+	/* Tamaño de la fuente*/
+    font-size: 20px;
+	
+	/* Establecer la distancia entre las lineas de un mismo parrafo */
+    line-height: 20px;
+	
+	/* Color del texto */
+    color: black;
+}
+
+.registration-box a:hover {
+  font-size:30px;
+  color:#ffe1e1;
+}
+
+.registration-box a:visited {
+     text-decoration: none;
+    font-size: 20px;
+    line-height: 20px;
+    color: white;
+}
+
+@keyframes slide {
+	0% { transform: translateX(0); }
+	10% { transform: translateX(0); }
+
+	15% { transform: translateX(-100%); }
+	40% { transform: translateX(-100%); }
+
+	45% { transform: translateX(-200%); }
+	70% { transform: translateX(-200%); }
+
+	75% { transform: translateX(-300%); }
+	100% { transform: translateX(-300%); }
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+	font-family: sans-serif;
+}
+
+.wrapper 
+{
+	max-width: auto;
+	margin: 0 auto;
+}
+
+.slider 
+{
+	position: relative;
+}
+
+.slides {
+	position: relative;
+	display: flex;
+	overflow: hidden;
+}
+
+.slide {
+	width: auto;
+	flex-shrink: 0;
+	animation-name: slide;
+	animation-duration: 20s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+.slides:hover .slide {
+	animation-play-state: paused;
+}
+
+.slide img {
+	width: 100%;
+	vertical-align: top;
+}
+
+.slide a {
+	width: 100%;
+	display: inline-block;
+	position: relative;
+}
+
+.caption {
+	color: white;
+	text-shadow: 1px 1px black;
+	font-size: 8vw;
+	position: absolute;
+	bottom: 8vw;
+	right: 4vw;
+}
+
+.slide:target {
+	animation-name: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 50;
+}
+
+.slider-controler {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	text-align: center;
+	padding: 5px;
+	background-color: rgba(0,0,0,0.5);
+	z-index: 100;
+}
+
+.slider-controler li {
+	margin: 0 0.5rem;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.slider-controler a {
+	display: inline-block;
+	vertical-align: top;
+	text-decoration: none;
+	color: white;
+	font-size: 1.5rem;
+}
+
+@media only screen and (min-width: auto) {
+	.slide {
+		width: auto;
+	}
+
+	.caption {
+		font-size: 96px;
+		bottom: 96px;
+		right: 50px;
+	}
+}
+
+.contenedor .footer {
+    background: #006CFF;
+    color: #fff;   
+    bottom: 0;    
+    padding: 40px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: repeat(4,auto);
+    position: end;
+}

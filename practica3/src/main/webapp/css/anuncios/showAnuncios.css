@@ -1,0 +1,80 @@
+.boton-personalizado{
+    text-decoration: none;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 20px;
+    color: #FFA07A;
+    background-color: #b15134;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 6px;
+    border: 2px solid #CD5C5C;
+    width:320px;
+  }
+
+
+body { 
+
+	font-family: 'Open Sans', sans-serif;
+	background-color: #FFA07A;
+    text-align:center;
+    color: white;
+}
+
+ p { 
+ 
+ 	margin-left: auto;
+ 	margin-right: auto;
+ 	width: 300px;
+	margin-bottom: 10px; 
+	background: rgba(0,0,0,0.3);
+	border: none;
+	outline: none;
+	padding: 10px;
+	font-size: 13px;
+	color: #fff;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+	border: 1px solid rgba(0,0,0,0.3);
+	border-radius: 4px;
+	
+	
+}
+
+ h1 {   
+ 	-wrt-text-stroke: 1px black ; 
+	color: #b15134; 
+	text-shadow: 0 0 10px rgba(0,0,0,0.3); 
+	letter-spacing:1px; 
+	text-align:center;
+	margin-bottom: 50px;
+	margin-top: 30px;
+ }
+ h2 { 
+ 	color:#fff;
+ 	text-align:center;
+ }
+ 
+ hr {
+	 border: 1px dashed white; 
+	 height: 0; 
+	 width: 60%; 
+	 margin-right:auto;
+	 margin-left: auto;
+	 margin-bottom: 30px;
+	 
+}
+ 	span{
+ 	 	color: #fff ;
+ 	}
+
+	a:visited {
+     text-decoration: none;
+    color: white;
+}
+	a:link {
+     text-decoration: none;
+    color: white;
+}
+
+span{
+	font-size:25px;
+	}
